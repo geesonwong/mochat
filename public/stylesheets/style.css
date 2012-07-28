@@ -10,9 +10,9 @@ a {
 
 .center {
     position: fixed;
-    width: 860px;
-    margin-left: -430px;
-    left: 50%
+    width: 960px;
+    margin-left: -480px;
+    left: 50%;
 }
 
 /*.........*/
@@ -24,6 +24,14 @@ header {
 
 footer {
     background-color: #d3d3d3;
-    height: 120px;
+    height: 100px;
     bottom: 0;
+    padding: 10px;
+}
+
+#content {
+    background-color: #90ee90;
+    top: 120px;
+    bottom: 25px;
+    overflow: auto;
 }

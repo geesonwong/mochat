@@ -45,7 +45,6 @@ http.createServer(app).listen(app.get('port'), function () {
 io = io.listen(app);
 
 io.sockets.on('connection', function (socket) {
-  console.log('111');
   socket.emit('news', { hello:'world' });
   socket.on('my other event', function (data) {
     console.log(data);
