@@ -1,8 +1,29 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 50px;
+    font: 14px "微软雅黑", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
+    text-decoration: none;
+}
+
+.center {
+    position: fixed;
+    width: 860px;
+    margin-left: -430px;
+    left: 50%
+}
+
+/*.........*/
+header {
+    background-color: #add8e6;
+    height: 120px;
+    top: 0;
+}
+
+footer {
+    background-color: #d3d3d3;
+    height: 120px;
+    bottom: 0;
 }
