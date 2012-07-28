@@ -3,51 +3,85 @@
  */
 
 var express = require('express')
-  , routes = require('./routes')
-  , http = require('http')
-  , path = require('path')
-  , io = require('socket.io');
+    , routes = require('./routes')
+    , http = require('http')
+    , path = require('path')
+    , io = require('socket.io')
+    , MemoryStore = express.session.MemoryStore
+    , parseCookie = require('express/node_modules/cookie').parse;
+
+var storeMemory = new MemoryStore({
+    reapInterval:60000 * 10
+});
+
+var roomlist=new RoomList();
 
 var app = express();
 
 app.configure(function () {
-  app.set('port', process.env.PORT || 3000);
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'html');
-  app.engine('html', require('ejs').renderFile);
-  app.use(express.favicon());
-  app.use(express.logger('dev'));
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(express.cookieParser('air'));
-  app.use(express.session());
-  app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
+    app.set('port', process.env.PORT || 3000);
+    app.set('views', __dirname + '/views');
+    app.set('view engine', 'html');
+    app.engine('html', require('ejs').renderFile);
+    app.use(express.favicon());
+    app.use(express.logger('dev'));
+    app.use(express.bodyParser());
+    app.use(express.methodOverride());
+    app.use(express.cookieParser('air'));
+    app.use(express.session({store:storeMemory}));
+    app.use(app.router);
+    app.use(express.static(path.join(__dirname, 'public')));
 });
 
 app.configure('development', function () {
-  app.use(express.errorHandler());
+    app.use(express.errorHandler());
 });
 
 // 应用的常量，可以在模板中直接取到值
 app.locals({
-  const:{
-  }
+    const:{
+    }
 });
 
 app.get('/', routes.index);
 
-http.createServer(app).listen(app.get('port'), function () {
-  console.log("服务器已启动，监听端口号：" + app.get('port'));
+var server = http.createServer(app).listen(app.get('port'), function () {
+    console.log("服务器已启动，监听端口号：" + app.get('port'));
 });
 
 // socket.io
-io = io.listen(app);
+io = io.listen(server);
 
+io.set('authorization', function (handshakeData, callback) {
+    // 通过客户端的cookie字符串来获取其session数据
+    handshakeData.cookie = parseCookie(handshakeData.headers.cookie);
+    var connect_sid = handshakeData.cookie['connect.sid'];//.slice(0, val.lastIndexOf('.'))
+    connect_sid=connect_sid.indexOf('s:')>=0?connect_sid.slice(2,connect_sid.lastIndexOf('.')):connect_sid;
+    console.log(connect_sid);
+    if (connect_sid) {
+        storeMemory.get(connect_sid, function (error, session) {
+            if (error) {
+                // if we cannot grab a session, turn down the connection
+                callback(error.message, false);
+            }
+            else {
+                // save the session data and accept the connection
+                handshakeData.session = session;
+                callback(null, true);
+            }
+        });
+    }
+    else {
+        callback('nosession');
+    }
+});
 io.sockets.on('connection', function (socket) {
-  console.log('111');
-  socket.emit('news', { hello:'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
+    if(socket.handshake.session){
+        var user= socket.handshake.session.user;
+        user.socket=socket;
+        socket.on('room_position',function(position){
+            roomlist.enter(user,'11:12');
+        })
+
+    }
 });
