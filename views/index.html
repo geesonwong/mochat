@@ -2,21 +2,72 @@
 <html>
 <head>
     <title>说点什么吧</title>
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <link rel='stylesheet' href='/stylesheets/jquery/jquery-ui-1.8.21.custom.css'/>
+    <meta charset="utf-8">
+    <link rel='stylesheet' href='../public/stylesheets/style.css'/>
+    <link rel='stylesheet' href='../public/stylesheets/jquery/jquery-ui-1.8.21.custom.css'/>
     <link rel="shortcut icon" type="image/x-icon" href="http://demo.sc.chinaz.com/Files/pic/iconsico/4736/chat.ico">
 
 </head>
 <body>
+<div class="wrap">
+    <div class="header">
+        <div class='header_board'></div>
+        <a href="###" id="header_btn"></a>
+    </div>
+    <div class="content">
+        <div class="board">
+            <div class="bubble self">
+                <p>今晚去哪里吃饭</p>
+                <span class="time">12：23</span>
+            </div>
+            <div class="bubble">
+                <p>今晚去哪里吃饭</p>
+                <span class="time">12：23</span>
+            </div>
+            <div class="bubble self">
+                <p>今晚去哪里吃饭</p>
+                <span class="time">12：23</span>
+            </div>
+            <div class="bubble">
+                <p>今晚去哪里吃饭</p>
+                <span class="time">12：23</span>
+            </div>
+            <div class="bubble">
+                <p>今晚去哪里吃饭</p>
+                <span class="time">12：23</span>
+            </div>
+        </div>
+        <div class="bar">
+            <a href="" id="send_img"></a>
+        </div>
+        <div class="public">
+            <div class="info">
+                <div class="avatar">
+                    <div class="dialog"></div>
+                </div>
+                <div class="name">
+                    <div class="dialog"></div>
+                </div>
+            </div>
+
+            <input type="text" name="input_text" id="input_text">
+            <input type="button" value="发送" title='ctrl+enter 发送'>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="copyright"></div>
+    </div>
+</div>
 </body>
-<script type="text/javascript" src="/javascripts/jquery/jquery-1.8b2.js"></script>
-<script type="text/javascript" src="/javascripts/jquery/jquery-ui-1.8.21.custom.min.js"></script>
-<script type="text/javascript" src="/javascripts/main.js"></script>
+<script type="text/javascript" src="../public/javascripts/jquery/jquery-1.8b2.js"></script>
+<script type="text/javascript" src="../public/javascripts/jquery/jquery-ui-1.8.21.custom.min.js"></script>
+<script type="text/javascript" src="../public/javascripts/main.js"></script>
 <script>
     var socket = io.connect('http://localhost:3000');
     socket.on('news', function (data) {
         console.log(data);
-        socket.emit('my other event', { my: 'data' });
+        socket.emit('my other event', { my:'data' });
     });
 </script>
-</html>
+
+</html> 
