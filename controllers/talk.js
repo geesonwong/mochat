@@ -26,7 +26,7 @@ Room.FULL = 4;
 
 Room.prototype = {
     constructor:Room,
-    addUse:function (user) {
+    addUser:function (user) {
         if (this.userList.length < this.max) {
             var length = this.userList.push(user);
             user.socket.__userListId__ = length - 1;
@@ -116,7 +116,7 @@ RoomList.prototype = {
     enter:function (user, position) {
         var room = this.roomMap[position];
         if (room) {
-            return room.addUse(user);
+            return room.addUser(user);
         } else {
             return RoomList.NOFAND;
         }

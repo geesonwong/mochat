@@ -8,23 +8,48 @@ a {
     text-decoration: none;
 }
 
-.center {
+header, footer, #content {
     position: fixed;
     width: 960px;
     margin-left: -480px;
     left: 50%;
 }
 
+.radius {
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+
+.matrix {
+    width: 100px;
+    height: 100px;
+    vertical-align: middle;
+    text-align: center;
+    color: #888;
+    font-size: 40px;
+    cursor: pointer;
+    text-shadow: 0 1px 0 white;
+    outline: 0;
+    background: -moz-linear-gradient(top, #FDFDFD 0, #E2E4E9 100%);
+    /*background: -o-linear-gradient(top, 0 #FDFDFD, 100% #E2E4E9);*/
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FDFDFD), color-stop(100%, #E2E4E9));
+}
+
+
 /*.........*/
 header {
     background-color: #add8e6;
+    padding: 10px;
     height: 120px;
+    width: 940px;
     top: 0;
 }
 
 footer {
     background-color: #d3d3d3;
     height: 100px;
+    width: 940px;
     bottom: 0;
     padding: 10px;
 }
@@ -32,6 +57,62 @@ footer {
 #content {
     background-color: #90ee90;
     top: 120px;
-    bottom: 25px;
+    bottom: 120px;
     overflow: auto;
+}
+
+#po-submit {
+    width: 105px;
+    height: 105px;
+    float: right;
+    -webkit-border-bottom-right-radius: 25px;
+    -moz-border-radius-bottomright: 25px;
+    border-bottom-right-radius: 25px;
+    border: 3px solid #B7B7B7;
+}
+
+#po-text {
+    width: 700px;
+    height: 80px;
+    float: left;
+    border: 3px solid #B7B7B7;
+    padding: 10px;
+    font-size: 17px;
+}
+
+#i-face {
+    width: 100px;
+    height: 100px;
+    float: left;
+    -webkit-border-bottom-left-radius: 25px;
+    -moz-border-radius-bottomleft: 25px;
+    border-bottom-left-radius: 25px;
+    border: 3px solid #B7B7B7;
+}
+
+#u-face {
+    width: 94px;
+    height: 94px;
+    float: right;
+    -webkit-border-top-left-radius: 25px;
+    -moz-border-radius-topleft: 25px;
+    border-top-left-radius: 25px;
+    border: 3px solid #B7B7B7;
+}
+
+#leave {
+    width: 100px;
+    height: 100px;
+    float: right;
+    -webkit-border-top-right-radius: 25px;
+    -moz-border-radius-topright: 25px;
+    border-top-right-radius: 25px;
+    font-size: 55px;
+    border: 3px solid #B7B7B7;
+}
+
+.item img {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #90ee90;
 }
