@@ -8,7 +8,10 @@ var express = require('express')
     , path = require('path')
     , io = require('socket.io')
     , MemoryStore = express.session.MemoryStore
-    , parseCookie = require('express/node_modules/cookie').parse;
+    , parseCookie = require('express/node_modules/cookie').parse
+    ,talkModule=require('./controllers/talk.js')
+    ,RoomList=talkModule.RoomList;
+   // ,Room=talkModule.Room;
 
 var storeMemory = new MemoryStore({
     reapInterval:60000 * 10
@@ -54,25 +57,31 @@ io = io.listen(server);
 
 io.set('authorization', function (handshakeData, callback) {
     // 通过客户端的cookie字符串来获取其session数据
-    handshakeData.cookie = parseCookie(handshakeData.headers.cookie);
-    var connect_sid = handshakeData.cookie['connect.sid'];//.slice(0, val.lastIndexOf('.'))
-    connect_sid=connect_sid.indexOf('s:')>=0?connect_sid.slice(2,connect_sid.lastIndexOf('.')):connect_sid;
-    console.log(connect_sid);
-    if (connect_sid) {
-        storeMemory.get(connect_sid, function (error, session) {
-            if (error) {
-                // if we cannot grab a session, turn down the connection
-                callback(error.message, false);
-            }
-            else {
-                // save the session data and accept the connection
-                handshakeData.session = session;
-                callback(null, true);
-            }
-        });
-    }
-    else {
-        callback('nosession');
+
+    if(handshakeData.headers.cookie){
+        handshakeData.cookie = parseCookie(handshakeData.headers.cookie);
+        var connect_sid = handshakeData.cookie['connect.sid'];//.slice(0, val.lastIndexOf('.'))
+        connect_sid=connect_sid.indexOf('s:')>=0?connect_sid.slice(2,connect_sid.lastIndexOf('.')):connect_sid;
+        console.log(connect_sid);
+        if (connect_sid) {
+            storeMemory.get(connect_sid, function (error, session) {
+                if (error) {
+                    // if we cannot grab a session, turn down the connection
+                    callback(error.message, false);
+                }
+                else {
+                    // save the session data and accept the connection
+                    handshakeData.session = session;
+                    callback(null, true);
+                }
+            });
+        }
+        else {
+            callback('nosession');
+        }
+    }else{
+      //  callback('nocookie');
+        callback(null, true);
     }
 });
 io.sockets.on('connection', function (socket) {
