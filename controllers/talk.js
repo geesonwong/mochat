@@ -85,13 +85,13 @@ Room.prototype = {
 
             user1.socket.on('msg', function (data) {
                 user2.socket.emit('msg', {'msg':messageHandle(data.msg),
-                                          'time':os.uptime(),
+                                          'time':(new Date(os.uptime())).toTimeString().split(' ')[0],
                                           'face':0});
             });
 
             user2.socket.on('msg', function (data) {
                 user1.socket.emit('msg',  {'msg':messageHandle(data.msg),
-                                            'time':os.uptime(),
+                                            'time':(new Date(os.uptime())).toTimeString().split(' ')[0],
                                             'face':0});
             });
 
