@@ -21,7 +21,7 @@ function Room(position, max) {
 Room.STAER = 1;
 Room.WAIT_TOMANY = 2;
 Room.WAIT_LACKUSER = 3;
-Room.SYSYTEMMESSAGE = '你们可以开始聊天了';
+Room.SYSTEMMESSAGE = '你们可以开始聊天了';
 Room.FULL = 4;
 
 Room.prototype = {
@@ -51,6 +51,13 @@ Room.prototype = {
             var userList = this.userList;
             var len;
             userList.splice(_id, 1);
+
+            //正在聊天中离开，必须通知对方
+            if((_id==1&&userList[0])||_id==2){
+                userList[0].socket.emit('opposite_leave');
+                 this.startTalk();
+            }
+
             len = userList.length;
 
             for (; _id < len; _id++) {
@@ -64,8 +71,8 @@ Room.prototype = {
             user1 = this.userList[0];
             user2 = this.userList[1];
 
-            user1.socket.emit('msg', Room.SYSYTEMMESSAGE);
-            user2.socket.emit('msg', Room.SYSYTEMMESSAGE);
+            user1.socket.emit('systemMsg', Room.SYSTEMMESSAGE);
+            user2.socket.emit('systemMsg', Room.SYSTEMMESSAGE);
 
             user1.socket.on('msg', function (message) {
                 user2.socket.emit('msg', messageHandle(message));

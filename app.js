@@ -55,6 +55,7 @@ var server = http.createServer(app).listen(app.get('port'), function () {
 // socket.io
 io = io.listen(server);
 
+
 io.set('authorization', function (handshakeData, callback) {
     // 通过客户端的cookie字符串来获取其session数据
 

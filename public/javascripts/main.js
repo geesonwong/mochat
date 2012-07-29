@@ -1,9 +1,21 @@
-// 实现一个命名空间
-namespace = {};
-namespace.register = function (name) {
+seajs.use([
+    'jquery',
+    'socket.io',
+    'talk-client'
+], function($, sio,talk){
+        var talkClient=talk.create(
+                function(){
 
-};
+                },   //msgCallback
+                function(){
 
-$(function () {
+                },   //systemCallback
+                function(){
+
+                }    //opleaveCallback
+        )
+
+
+
 
 });

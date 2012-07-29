@@ -49,16 +49,10 @@
 </footer>
 
 </body>
-<script type="text/javascript" src="../public/javascripts/jquery/jquery-1.8b2.js"></script>
-<script type="text/javascript" src="../public/javascripts/jquery/jquery-ui-1.8.21.custom.min.js"></script>
-<script src="../public/javascripts/main.js"></script>
-<script src="../public/javascripts/socket.io.min.js"></script>
+<script type="text/javascript" src="../public/javascripts/seajs/sea.js"></script>
+<script type="text/javascript" src="../public/javascripts/main.js"></script>
 <script>
-    var socket = io.connect('http://localhost:3000');
-    socket.on('news', function (data) {
-        console.log(data);
-        socket.emit('my other event', { my:'data' });
-   });
+
 </script>
 
 </html> 
