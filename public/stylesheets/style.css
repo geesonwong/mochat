@@ -8,7 +8,7 @@ a {
     text-decoration: none;
 }
 
-#header, #footer, #content {
+#header, #footer, #content, #map, #config {
     position: fixed;
     width: 960px;
     margin-left: -480px;
@@ -39,10 +39,9 @@ a {
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FDFDFD), color-stop(100%, #E2E4E9));
 }
 
-
 /*.........*/
 #header {
-    background-color: #efefef;
+    background-color: #FDFDFD;
     padding: 10px;
     height: 100px;
     width: 940px;
@@ -53,14 +52,14 @@ a {
     -webkit-border-top-right-radius: 25px;
     -moz-border-radius-topright: 25px;
     border-top-right-radius: 25px;
-    box-shadow: 0 10px 30px gray;
-    -moz-box-shadow: 0 10 30px gray;
-    -webkit-box-shadow: 0 10px 30px gray;
+    box-shadow: 0 10px 20px gray;
+    -moz-box-shadow: 0 10 20px gray;
+    -webkit-box-shadow: 0 10px 20px gray;
     z-index: 200;
 }
 
 #footer {
-    background-color: #d3d3d3;
+    background-color: #E2E4E9;
     height: 110px;
     width: 940px;
     bottom: 0;
@@ -71,9 +70,9 @@ a {
     -webkit-border-bottom-right-radius: 25px;
     -moz-border-radius-bottomright: 25px;
     border-bottom-right-radius: 25px;
-    box-shadow: 0 0 30px gray;
-    -moz-box-shadow: 0 0 30px gray;
-    -webkit-box-shadow: 0 0 30px gray;
+    box-shadow: 0 0 20px gray;
+    -moz-box-shadow: 0 0 20px gray;
+    -webkit-box-shadow: 0 0 20px gray;
     z-index: 200;
 }
 
@@ -83,6 +82,48 @@ a {
     overflow: auto;
     padding: 20px;
     width: 920px;
+}
+
+#map {
+    display: none;
+    top: 120px;
+    overflow: auto;
+    padding: 20px;
+    width: 920px;
+    height: 300px;
+    z-index: 200;
+    box-shadow: 0 10px 20px gray;
+    -moz-box-shadow: 0 10 20px gray;
+    -webkit-box-shadow: 0 10px 15px gray;
+    -webkit-border-bottom-left-radius: 25px;
+    -moz-border-radius-bottomleft: 25px;
+    border-bottom-left-radius: 25px;
+    -webkit-border-bottom-right-radius: 25px;
+    -moz-border-radius-bottomright: 25px;
+    border-bottom-right-radius: 25px;
+    background: -moz-linear-gradient(top, #FDFDFD 0, #E2E4E9 100%);
+    /*background: -o-linear-gradient(top, 0 #FDFDFD, 100% #E2E4E9);*/
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FDFDFD), color-stop(100%, #E2E4E9));
+}
+
+#config {
+    display: none;
+    bottom: 130px;
+    overflow: auto;
+    padding: 20px;
+    width: 920px;
+    height: 100px;
+    z-index: 200;
+    border-top: 1px solid gray;
+    -webkit-border-top-left-radius: 25px;
+    -moz-border-radius-topleft: 25px;
+    border-top-left-radius: 25px;
+    -webkit-border-top-right-radius: 25px;
+    -moz-border-radius-topright: 25px;
+    border-top-right-radius: 25px;
+    background: -moz-linear-gradient(top, #FDFDFD 0, #E2E4E9 100%);
+    /*background: -o-linear-gradient(top, 0 #FDFDFD, 100% #E2E4E9);*/
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FDFDFD), color-stop(100%, #E2E4E9));
 }
 
 #i-face {
@@ -132,7 +173,7 @@ a {
 #info {
     float: left;
     margin-left: 20px;
-    margin-top:20px;
+    margin-top: 20px;
     font-size: 18px;
 }
 
@@ -197,4 +238,20 @@ a {
 .item .self p {
     background-color: #FDFFE3;
     color: #000000;
+}
+
+.notice {
+    border-bottom: 2px solid #d3d3d3;
+    height: 15px;
+}
+
+.notice p {
+    padding: 8px;
+    width: 400px;
+    font-size: 15px;
+    background-color: #ffffe0;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #000000;
+    z-index: 20;
 }
