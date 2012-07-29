@@ -6,12 +6,12 @@
     <link rel='stylesheet' href='/stylesheets/style.css'/>
     <link rel='stylesheet' href='/stylesheets/jquery/jquery-ui-1.8.21.custom.css'/>
     <link rel="shortcut icon" type="image/x-icon" href="http://demo.sc.chinaz.com/Files/pic/iconsico/4736/chat.ico">
-
 </head>
 <body>
 
 <div id="header">
     <img id="u-face" class="matrix" src="http://tp2.sinaimg.cn/1577826897/180/5630306051/1">
+
     <div id="info">
         <span>经纬度：142' 23'</span>
         <span>地方名：古巴比仑</span>
@@ -24,7 +24,8 @@
 <div id="content">
     <div class="item">
         <div class="bubble">
-            <p>今晚去哪里今晚去去哪里今晚去今晚去去哪里今晚去今晚去去哪里今晚去今晚去去哪里今晚去去晚去去哪里今晚去去晚去去哪里今晚去去晚去去哪里今晚去去晚去去哪里今晚去去哪里今晚去去哪里今晚去去哪里今晚去去哪里今晚去哪里今晚去哪里今晚去哪里今晚去哪里今晚去哪里今晚去哪里今晚去哪里吃饭</p>
+            <p>
+                今晚去哪里今晚去去哪里今晚去今晚去去哪里今晚去今晚去去哪里今晚去今晚去去哪里今晚去去晚去去哪里今晚去去晚去去哪里今晚去去晚去去哪里今晚去去晚去去哪里今晚去去哪里今晚去去哪里今晚去去哪里今晚去去哪里今晚去哪里今晚去哪里今晚去哪里今晚去哪里今晚去哪里今晚去哪里今晚去哪里吃饭</p>
             <span class="time">12：23</span>
         </div>
         <img src="http://tp2.sinaimg.cn/1577826897/180/5630306051/1">
@@ -68,9 +69,22 @@
 </body>
 <script type="text/javascript" src="/javascripts/seajs/sea.js"></script>
 <script type="text/javascript" src="/javascripts/init.js"></script>
+<!--<script type="text/javascript" src="/javascripts/template.min.js"></script>-->
+<script type="text/javascript" src="/javascripts/main.js"></script>
 <!--[if lt IE 9]>
-<!--<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>-->
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
+
+<script id="item" type="text/html">
+    <div class="item">
+        <div class="bubble self">
+            <p>{%= data.msg %}</p>
+            <span class="time">{%= data.time %}</span>
+        </div>
+        <img src="http://tp1.sinaimg.cn/1494932200/180/5601623669/1"
+             style="background-position: ">
+    </div>
+</script>
 
 
 </html> 

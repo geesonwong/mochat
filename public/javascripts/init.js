@@ -12,7 +12,7 @@
     'socket.io':'socket.io.min.js',
     'main':'main.js',
     'talk':'talk-client.js',
-    'template.js':'template.min.js'
+    'template':'template.min.js'
   };
 
   var map = [
