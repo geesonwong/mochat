@@ -20,11 +20,11 @@ define(function(require, exports, module) {
     Talk.prototype={
 
         enterRoom:function(position){
-            var socket;;
+            var socket;
             socket=this.socket||(this.socket=this.sio.connect(this.server));
 
             var that=this;//
-            socket.on('opposite_leave',function(){
+            socket.on('oppositeLeave',function(){
                //todo 对方离开的处理
                 that.opleaveCallback();
             });

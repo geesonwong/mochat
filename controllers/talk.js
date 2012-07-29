@@ -5,6 +5,9 @@
  * Time: 下午1:23
  * To change this template use File | Settings | File Templates.
  */
+
+var os= require('os');
+
 function User(socket, info) {
     this.socket = socket;
     this.info = info;
@@ -49,25 +52,25 @@ Room.prototype = {
         if (socket.__userListId__!==undefined) {
             var _id = socket.__userListId__;
             var userList = this.userList;
-            var len;
-           // Console.log('离开'+_id);
+            var len,i;
+
             userList.splice(_id, 1);
 
             //正在聊天中离开，必须通知对方
-            if((_id==1&&userList[0])||_id==2){
-                userList[0].socket.emit('opposite_leave');
 
-            }
 
             len = userList.length;
-           // Console.log('剩下'+len);
+            i=_id;
 
-            for (; _id < len; _id++) {
-               // Console.log('源id'+userList[_id].socket.__userListId__);
+            for (; i < len; i++) {
+
                 userList[_id].socket.__userListId__--;
-              //  Console.log('后来Id'+userList[_id].socket.__userListId__);
-            }
 
+            }
+            if((_id==0&&userList[0])||_id==1){
+                userList[0].socket.emit('oppositeLeave');
+
+            }
             this.startTalk();
         }
     },
@@ -81,11 +84,15 @@ Room.prototype = {
             user2.socket.emit('systemMsg', {'sysMsg':Room.SYSTEMMESSAGE});
 
             user1.socket.on('msg', function (data) {
-                user2.socket.emit('msg', {'msg':messageHandle(data.msg)});
+                user2.socket.emit('msg', {'msg':messageHandle(data.msg),
+                                          'time':os.uptime(),
+                                          'face':0});
             });
 
             user2.socket.on('msg', function (data) {
-                user1.socket.emit('msg',  {'msg':messageHandle(data.msg)});
+                user1.socket.emit('msg',  {'msg':messageHandle(data.msg),
+                                            'time':os.uptime(),
+                                            'face':0});
             });
 
             return Room.STAER;

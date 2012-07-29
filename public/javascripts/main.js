@@ -17,13 +17,13 @@ seajs.use([
                     $(tmp).appendTo(content);
                 },   //msgCallback
                 function(data){
-                    var tmp= '<h1>'+data.sysMsg+'<h1>'
+                    var tmp= '<h1>'+data.sysMsg+'</h1>';
 
 
                     $(tmp).appendTo(content);
                 },   //systemCallback
                 function(){
-                    var tmp= '对方已经离开';
+                    var tmp= '<h6>对方已经离开</h6>';
 
 
                     $(tmp).appendTo(content);
