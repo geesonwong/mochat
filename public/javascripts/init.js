@@ -7,11 +7,11 @@
  */
 (function() {
     var alias = {
-       'jquery':'./jquery/jquery-1.8b2.js',
-        'jquery-ui':'./jquery/jquery-ui-1.8.21.custom.min.js',
-        'socket.io':'./socket.io.min.js',
-        'main':'./main.js',
-        'talk':'./talk-client.js'
+       'jquery':'jquery/jquery-1.8b2.js',
+        'jquery-ui':'jquery/jquery-ui-1.8.21.custom.min.js',
+        'socket.io':'socket.io.min.js',
+        'main':'main.js',
+        'talk':'talk-client.js'
     };
 
     var map = [
@@ -19,11 +19,11 @@
     ];
 
     var preload = [
-        'jquery'
+       // 'jquery'
     ];
 
     seajs.config({
-       // base: 'http://a.tbcdn.cn/apps/hupanweb/',
+        base: '/javascripts',
         alias: alias,
         preload: preload,
         //map: map,

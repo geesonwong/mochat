@@ -6,8 +6,9 @@
  * To change this template use File | Settings | File Templates.
  */
 define(function(require, exports, module) {
+    require('socket.io');
     function Talk(msgCallback,systemCallback,opleaveCallback){
-    this.sio= require('socket.io');
+    this.sio= io;
     this.server='http://localhost:3000';
     this.socket=null;
     this.talking=false;
@@ -19,25 +20,27 @@ define(function(require, exports, module) {
     Talk.prototype={
 
         enterRoom:function(position){
-            var socket=this.socket;
-            socket||(socket=this.sio.connect(server));
+            var socket;;
+            socket=this.socket||(this.socket=this.sio.connect(this.server));
+
+            var that=this;//
             socket.on('opposite_leave',function(){
                //todo 对方离开的处理
-            this.opleaveCallback();
+                that.opleaveCallback();
             });
 
-            socket.on('systemMsg',function(msg){
-                talking=true;
+            socket.on('systemMsg',function(data){
+                that.talking=true;
                 //todo 显示系统消息和通知已开始对话
-                this.systemCallback(msg)
+                that.systemCallback(data)
             });
 
-            socket.on('msg',function(msg){
+            socket.on('msg',function(data){
                 //todo 接到消息 msg
-                this.msgCallback(msg);
+                that.msgCallback(data);
             });
 
-            socket.emit('room_position',position);
+            socket.emit('room_position',{'position':position});
         },
 
         leaveRoom:function(){
@@ -48,7 +51,7 @@ define(function(require, exports, module) {
 
         sendMsg:function(msg){
             if(this.talking){
-                this.socket.emit('msg',msg);
+                this.socket.emit('msg',{'msg':msg});
                 return true;
             }else{
                 return false;
@@ -59,7 +62,7 @@ define(function(require, exports, module) {
     module.exports = {
         create:function(msgCallback,systemCallback,opleaveCallback){
             return new Talk(msgCallback,systemCallback,opleaveCallback);
-        };
+        }
     };
 });
 

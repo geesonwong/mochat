@@ -26,7 +26,7 @@ Room.FULL = 4;
 
 Room.prototype = {
     constructor:Room,
-    addUse:function (user) {
+    addUser:function (user) {
         if (this.userList.length < this.max) {
             var length = this.userList.push(user);
             user.socket.__userListId__ = length - 1;
@@ -46,23 +46,29 @@ Room.prototype = {
         }
     },
     removeUser:function (socket) {
-        if (socket.__userListId__) {
+        if (socket.__userListId__!==undefined) {
             var _id = socket.__userListId__;
             var userList = this.userList;
             var len;
+           // Console.log('离开'+_id);
             userList.splice(_id, 1);
 
             //正在聊天中离开，必须通知对方
             if((_id==1&&userList[0])||_id==2){
                 userList[0].socket.emit('opposite_leave');
-                 this.startTalk();
+
             }
 
             len = userList.length;
+           // Console.log('剩下'+len);
 
             for (; _id < len; _id++) {
+               // Console.log('源id'+userList[_id].socket.__userListId__);
                 userList[_id].socket.__userListId__--;
+              //  Console.log('后来Id'+userList[_id].socket.__userListId__);
             }
+
+            this.startTalk();
         }
     },
     startTalk:function () {
@@ -71,15 +77,15 @@ Room.prototype = {
             user1 = this.userList[0];
             user2 = this.userList[1];
 
-            user1.socket.emit('systemMsg', Room.SYSTEMMESSAGE);
-            user2.socket.emit('systemMsg', Room.SYSTEMMESSAGE);
+            user1.socket.emit('systemMsg', {'sysMsg':Room.SYSTEMMESSAGE});
+            user2.socket.emit('systemMsg', {'sysMsg':Room.SYSTEMMESSAGE});
 
-            user1.socket.on('msg', function (message) {
-                user2.socket.emit('msg', messageHandle(message));
+            user1.socket.on('msg', function (data) {
+                user2.socket.emit('msg', {'msg':messageHandle(data.msg)});
             });
 
-            user2.socket.on('msg', function (message) {
-                user1.socket.emit('msg', messageHandle(message));
+            user2.socket.on('msg', function (data) {
+                user1.socket.emit('msg',  {'msg':messageHandle(data.msg)});
             });
 
             return Room.STAER;
@@ -123,7 +129,7 @@ RoomList.prototype = {
     enter:function (user, position) {
         var room = this.roomMap[position];
         if (room) {
-            return room.addUse(user);
+            return room.addUser(user);
         } else {
             return RoomList.NOFAND;
         }

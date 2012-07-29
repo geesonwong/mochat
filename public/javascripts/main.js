@@ -1,20 +1,41 @@
 seajs.use([
-    'jquery',
-    'socket.io',
-    'talk-client'
-], function($, sio,talk){
+    'talk-client',
+    'jquery'
+], function(talk){
+        var content=$('#content'),
+            poText=$('#po-text'),
+            poSubmit=$('#po-submit');
+
         var talkClient=talk.create(
-                function(){
+                function(data){
+                  //  <img src="http://img.xiami.com/res/loop/img/avatar/head_front_lime.png">
+                        var tmp= '<div class="bubble self">'
+                            +'<p>'+data.msg+'</p>'
+                          +' <span class="time"></span>'
+                       +' </div>';
 
+                    $(tmp).appendTo(content);
                 },   //msgCallback
-                function(){
+                function(data){
+                    var tmp= '<h1>'+data.sysMsg+'<h1>'
 
+
+                    $(tmp).appendTo(content);
                 },   //systemCallback
                 function(){
+                    var tmp= '对方已经离开';
 
+
+                    $(tmp).appendTo(content);
                 }    //opleaveCallback
-        )
+        );
 
+    talkClient.enterRoom('11:12')
+    poSubmit.click(function(){
+        talkClient.sendMsg(poText.val());
+        poText.val('');
+
+    });
 
 
 

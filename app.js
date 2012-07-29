@@ -89,8 +89,8 @@ io.sockets.on('connection', function (socket) {
     if(socket.handshake.session){
         var user= socket.handshake.session.user;
         user.socket=socket;
-        socket.on('room_position',function(position){
-            roomlist.enter(user,'11:12');
+        socket.on('room_position',function(data){
+            roomlist.enter(user,'11:12');//应该传data['position']
         })
 
     }

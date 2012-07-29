@@ -3,8 +3,8 @@
 <head>
     <title>开聊吧！</title>
     <meta charset="utf-8">
-    <link rel='stylesheet' href='../public/stylesheets/style.css'/>
-    <link rel='stylesheet' href='../public/stylesheets/jquery/jquery-ui-1.8.21.custom.css'/>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='/stylesheets/jquery/jquery-ui-1.8.21.custom.css'/>
     <link rel="shortcut icon" type="image/x-icon" href="http://demo.sc.chinaz.com/Files/pic/iconsico/4736/chat.ico">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -13,46 +13,31 @@
 </head>
 <body>
 
-<header class="center">
-    <div class='header-board'></div>
-    <a href="###" id="header-btn"></a>
+<header>
+    <img id="u-face" class="matrix" src="http://tp2.sinaimg.cn/1577826897/180/5630306051/1">
+    <button id="leave" class="matrix">X</button>
 </header>
 
-<div id="content" class="center">
-    <div class="board">
+<div id="content">
+    <div class="item">
+        <img src="http://img.xiami.com/res/loop/img/avatar/head_front_lime.png">
         <div class="bubble self">
             <p>今晚去哪里吃饭</p>
             <span class="time">12：23</span>
-            <img src="http://img.xiami.com/res/loop/img/avatar/head_front_lime.png">
         </div>
-    </div>
-    <div class="bar">
-        <a href="" id="send-img"></a>
-    </div>
-    <div class="public">
-        <div class="info">
-            <div class="avatar">
-                <div class="dialog"></div>
-            </div>
-            <div class="name">
-                <div class="dialog"></div>
-            </div>
-        </div>
-
-        <input type="text" name="input-text" id="input-text">
-        <input type="button" value="发送" title='ctrl+enter 发送'>
     </div>
 </div>
 
-<footer class="center">
-    <img src="http://img.xiami.com/res/loop/img/avatar/head_front_lime.png">
+<footer>
+    <img id="i-face" class="matrix" src="http://tp1.sinaimg.cn/1625070192/180/5626596604/1">
+    <textarea id="po-text"></textarea>
+    <button id="po-submit" class="matrix">发送</button>
 </footer>
 
 </body>
-<script type="text/javascript" src="../public/javascripts/seajs/sea.js"></script>
-<script type="text/javascript" src="../public/javascripts/main.js"></script>
-<script>
+<script type="text/javascript" src="/javascripts/seajs/sea.js"></script>
+<script type="text/javascript" src="/javascripts/init.js"></script>
+<script type="text/javascript" src="/javascripts/main.js"></script>
 
-</script>
 
 </html> 
