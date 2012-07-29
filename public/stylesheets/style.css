@@ -8,7 +8,7 @@ a {
     text-decoration: none;
 }
 
-header, footer, #content {
+#header, #footer, #content {
     position: fixed;
     width: 960px;
     margin-left: -480px;
@@ -40,7 +40,7 @@ header, footer, #content {
 
 
 /*.........*/
-header {
+#header {
     background-color: #efefef;
     padding: 10px;
     height: 100px;
@@ -58,7 +58,7 @@ header {
     z-index: 200;
 }
 
-footer {
+#footer {
     background-color: #d3d3d3;
     height: 110px;
     width: 940px;
