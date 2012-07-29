@@ -69,16 +69,9 @@
 </div>
 
 </body>
-<script type="text/javascript" src="/javascripts/jquery/jquery-1.8b2.js"></script>
-<script type="text/javascript" src="/javascripts/jquery/jquery-ui-1.8.21.custom.min.js"></script>
-<script src="/javascripts/main.js"></script>
-<script src="/javascripts/socket.io.min.js"></script>
-<script>
-    var socket = io.connect('http://localhost:3000');
-    socket.on('news', function (data) {
-        console.log(data);
-        socket.emit('my other event', { my:'data' });
-    });
-</script>
+<script type="text/javascript" src="/javascripts/seajs/sea.js"></script>
+<script type="text/javascript" src="/javascripts/init.js"></script>
+<script type="text/javascript" src="/javascripts/main.js"></script>
+
 
 </html> 
