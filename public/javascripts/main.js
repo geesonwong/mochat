@@ -31,6 +31,7 @@ seajs.use([
 
   });
 
+  //
   template.openTag = "{%";
   template.closeTag = "%}";
 
