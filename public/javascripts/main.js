@@ -5,7 +5,11 @@ seajs.use([
 ], function (talk) {
   var content = $('#content'),
     poText = $('#po-text'),
-    poSubmit = $('#po-submit');
+    poSubmit = $('#po-submit'),
+    localStorage= window.localStorage;
+
+
+    localStorage.setItem('user',{'face':0,'name':'czy'});
 
   var talkClient = talk.create(
     function (data) {// 聊天信息

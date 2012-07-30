@@ -15,6 +15,7 @@ a {
     left: 50%;
     border-left: 1px solid gray;
     border-right: 1px solid gray;
+    display: block;
 }
 
 .radius {
