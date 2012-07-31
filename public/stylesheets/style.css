@@ -3,10 +3,13 @@
     width: 960px;
     margin-left: -480px;
     left: 50%;
-    border-left: 1px solid gray;
-    border-right: 1px solid gray;
     position: absolute;
     height: 100%;
+    top: 0;
+}
+
+#header, #content, #footer, #config, #map {
+    border: 2px solid gray;
 }
 
 .radius {
@@ -47,6 +50,7 @@
     -moz-box-shadow: 0 10 20px gray;
     -webkit-box-shadow: 0 10px 20px gray;
     z-index: 200;
+    border-bottom: 0;
 }
 
 #footer {
@@ -66,6 +70,7 @@
     -moz-box-shadow: 0 0 20px gray;
     -webkit-box-shadow: 0 0 20px gray;
     z-index: 200;
+    border-top: 0;
 }
 
 #content {
@@ -75,6 +80,8 @@
     overflow: auto;
     padding: 20px;
     width: 920px;
+    /*border-left: 1px solid gray;*/
+    /*border-right: 1px solid gray;*/
 }
 
 #map {
@@ -89,6 +96,7 @@
     width: 920px;
     height: 300px;
     z-index: 200;
+    border-top: 0;
     box-shadow: 0 10px 20px gray;
     -moz-box-shadow: 0 10 20px gray;
     -webkit-box-shadow: 0 10px 15px gray;
@@ -112,7 +120,7 @@
     width: 920px;
     height: 150px;
     z-index: 200;
-    border-top: 1px solid gray;
+    border-bottom: 0;
     -webkit-border-top-left-radius: 25px;
     -moz-border-radius-topleft: 25px;
     border-top-left-radius: 25px;
@@ -287,7 +295,7 @@
     /*padding: 5px;*/
 }
 
-.profile input, textarea {
+.profile input {
     float: left;
     height: 16px;
     resize: none;
@@ -297,6 +305,7 @@
     font-family: '微软雅黑';
     font-weight: bold;
     margin-bottom: 5px;
+    display: block;
 }
 
 .profile textarea {
@@ -307,4 +316,10 @@
     height: 40px;
     font-size: 28px;
     margin-left: 10px;
+}
+
+.profile .state {
+    border: 3px solid gray;
+    width: 100px;
+    height: 50px;
 }
