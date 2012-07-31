@@ -20,7 +20,7 @@
     ];
 
     var preload = [
-        // 'jquery'
+        'jquery'
     ];
 
     seajs.config({

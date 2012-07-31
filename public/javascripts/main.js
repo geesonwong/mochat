@@ -1,6 +1,5 @@
 seajs.use([
     'talk-client',
-    'jquery',
     'jquery-ui',
     'template'
 ], function (talk) {
@@ -13,7 +12,7 @@ seajs.use([
         localStorage.setItem('face', 0);
         localStorage.setItem('name', '陌生人');
     }else{
-        $('#i-face').css('background-position', -parseInt(localStorage.face) * 124 + 'px 0px');
+        $('#i-face').css('background-position', -parseInt(localStorage.face) * 100 + 'px 0px');
     }
 
     var talkClient = talk.create(
@@ -46,27 +45,29 @@ seajs.use([
     template.openTag = "{%";
     template.closeTag = "%}";
 
+//    var iFace
+
     var areas = template.render('area', {
-        count:20
+        count:21
     });
     $(areas).appendTo($('map'));
 
     $('#i-face').click(function () {
         if ($('#map').css('display') != 'none')
-            $('#map').hide('drop', {
+            $('#map').hide('slide', {
                 direction:'up'
             }, 200);
-        $('#config').toggle('drop', {
+        $('#config').toggle('slide', {
             direction:'down'
         }, 200);
     });
 
     $('#header').click(function () {
         if ($('#config').css('display') != 'none')
-            $('#config').hide('drop', {
+            $('#config').hide('slide', {
                 direction:'down'
             }, 200);
-        $('#map').toggle('drop', {
+        $('#map').toggle('slide', {
             direction:'up'
         }, 200);
     });
@@ -74,7 +75,7 @@ seajs.use([
     $('area').click(function () {
         var n = $(this).attr('value');
         localStorage.setItem('face', n);
-        $('#i-face').css('background-position', -parseInt(n) * 124 + 'px 0px');
+        $('#i-face').css('background-position', -parseInt(n) * 100 + 'px 0px');
     });
 
 

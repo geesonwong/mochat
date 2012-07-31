@@ -1,21 +1,12 @@
-body {
-    padding: 50px;
-    font: 14px "微软雅黑", Helvetica, Arial, sans-serif;
-}
-
-a {
-    color: #00B7FF;
-    text-decoration: none;
-}
-
-#header, #footer, #content, #map, #config {
-    position: fixed;
+.wrap {
+    margin-right: auto;
     width: 960px;
     margin-left: -480px;
     left: 50%;
     border-left: 1px solid gray;
     border-right: 1px solid gray;
-    display: block;
+    position: absolute;
+    height: 100%;
 }
 
 .radius {
@@ -35,12 +26,12 @@ a {
     text-shadow: 0 1px 0 white;
     outline: 0;
     background: -moz-linear-gradient(top, #FDFDFD 0, #E2E4E9 100%);
-    /*background: -o-linear-gradient(top, 0 #FDFDFD, 100% #E2E4E9);*/
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FDFDFD), color-stop(100%, #E2E4E9));
 }
 
 /*.........*/
 #header {
+    position: absolute;
     background-color: #FDFDFD;
     padding: 10px;
     height: 100px;
@@ -59,6 +50,7 @@ a {
 }
 
 #footer {
+    position: absolute;
     background-color: #E2E4E9;
     height: 110px;
     width: 940px;
@@ -77,6 +69,7 @@ a {
 }
 
 #content {
+    position: absolute;
     top: 120px;
     bottom: 130px;
     overflow: auto;
@@ -85,9 +78,13 @@ a {
 }
 
 #map {
+    position: absolute;
     display: none;
     top: 120px;
     overflow: auto;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
     padding: 20px;
     width: 920px;
     height: 300px;
@@ -107,6 +104,7 @@ a {
 }
 
 #config {
+    position: absolute;
     display: none;
     bottom: 120px;
     overflow: auto;
@@ -135,6 +133,9 @@ a {
     border-bottom-left-radius: 25px;
     border: 3px solid #B7B7B7;
     background-image: url("/images/faces.jpg");
+    transition: 1s ease-out;
+    -webkit-transition: 1s ease-out;
+    -moz-transition: 1s ease-out;
 }
 
 #po-text {
@@ -258,7 +259,15 @@ a {
     margin-left: auto;
     margin-right: auto;
     border: 1px solid #000000;
-    z-index: 20;
+
+    vertical-align: middle;
+    text-align: center;
+    /*color: #888;*/
+    cursor: pointer;
+    text-shadow: 0 1px 0 white;
+    outline: 0;
+    background: -moz-linear-gradient(top, #FDFDFD 0, #E2E4E9 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FDFDFD), color-stop(100%, #E2E4E9));
 }
 
 .faces {
@@ -278,7 +287,7 @@ a {
     /*padding: 5px;*/
 }
 
-.profile input,textarea {
+.profile input, textarea {
     float: left;
     height: 16px;
     resize: none;
