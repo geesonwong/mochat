@@ -108,11 +108,11 @@ a {
 
 #config {
     display: none;
-    bottom: 130px;
+    bottom: 120px;
     overflow: auto;
     padding: 20px;
     width: 920px;
-    height: 100px;
+    height: 150px;
     z-index: 200;
     border-top: 1px solid gray;
     -webkit-border-top-left-radius: 25px;
@@ -134,6 +134,7 @@ a {
     -moz-border-radius-bottomleft: 25px;
     border-bottom-left-radius: 25px;
     border: 3px solid #B7B7B7;
+    background-image: url("/images/faces.jpg");
 }
 
 #po-text {
@@ -243,10 +244,14 @@ a {
 .notice {
     border-bottom: 2px solid #d3d3d3;
     height: 15px;
+    position: relative;
+    clear: left;
+    margin: 30px 0;
 }
 
 .notice p {
     padding: 8px;
+    margin: 20px 0;
     width: 400px;
     font-size: 15px;
     background-color: #ffffe0;
@@ -254,4 +259,43 @@ a {
     margin-right: auto;
     border: 1px solid #000000;
     z-index: 20;
+}
+
+.faces {
+    float: left;
+    overflow: auto;
+    width: 530px;
+    border: 2px solid gray;
+    border-bottom: 0;
+}
+
+.profile {
+    float: right;
+    width: 370px;
+    height: 140px;
+    font-size: 18px;
+    /*background-color: #add8e6;*/
+    /*padding: 5px;*/
+}
+
+.profile input,textarea {
+    float: left;
+    height: 16px;
+    resize: none;
+    border: 3px solid #B7B7B7;
+    padding: 10px;
+    font-size: 16px;
+    font-family: '微软雅黑';
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.profile textarea {
+    width: 300px;
+}
+
+.profile button {
+    height: 40px;
+    font-size: 28px;
+    margin-left: 10px;
 }

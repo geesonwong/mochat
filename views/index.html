@@ -25,7 +25,7 @@
 </div>
 
 <div id="footer">
-    <img id="i-face" class="matrix" src="http://tp1.sinaimg.cn/1494932200/180/5601623669/1">
+    <div id="i-face" class="matrix"></div>
     <textarea id="po-text"></textarea>
     <button id="po-submit" class="matrix">发送</button>
 </div>
@@ -35,7 +35,15 @@
 </div>
 
 <div id="config">
-
+    <div class="faces">
+        <img width="" src="/images/faces.jpg" usemap="#faces">
+        <map name="faces"></map>
+    </div>
+    <div class="profile">
+        <label><input type="text" placeholder="取一个名字"><button class="matrix">随机</button></label>
+        <textarea placeholder="写点什么描述下自己～"></textarea>
+        <button class="matrix">静音</button>
+    </div>
 </div>
 
 </body>
@@ -62,8 +70,15 @@
 <!-- 通知消息模板 -->
 <script id="notice" type="text/html">
     <div class="notice">
-        <p>{%=msg %}</p>
+        <p>{%=data.sysMsg %}</p>
     </div>
+</script>
+
+<!-- 图片热点模板 -->
+<script id="area" type="text/html">
+    {% for(var i = 0; i < count; i++) { %}
+    <area shape="rect" coords="{%= i*124 %},0,{%= (i+1)*124 %},124" value="{%= i %}" href="#">
+    {% } %}
 </script>
 
 </html> 

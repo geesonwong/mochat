@@ -6,29 +6,29 @@
  * To change this template use File | Settings | File Templates.
  */
 (function () {
-  var alias = {
-    'jquery':'jquery/jquery-1.8b2.js',
-    'jquery-ui':'jquery/jquery-ui-1.8.21.custom.min.js',
-    'socket.io':'socket.io.min.js',
-    'main':'main.js',
-    'talk':'talk-client.js',
-    'template':'template.min.js'
-  };
+    var alias = {
+        'jquery':'jquery/jquery-1.7.2.min.js',
+        'jquery-ui':'jquery/jquery-ui-1.8.22.custom.min.js',
+        'socket.io':'socket.io.min.js',
+        'main':'main.js',
+        'talk':'talk-client.js',
+        'template':'template.min.js'
+    };
 
-  var map = [
+    var map = [
 
-  ];
+    ];
 
-  var preload = [
-    // 'jquery'
-  ];
+    var preload = [
+        // 'jquery'
+    ];
 
-  seajs.config({
-    base:'/javascripts',
-    alias:alias,
-    preload:preload,
-    //map: map,
-    charset:'utf-8'
-  });
+    seajs.config({
+        base:'/javascripts',
+        alias:alias,
+        preload:preload,
+        //map: map,
+        charset:'utf-8'
+    });
 
 })();
