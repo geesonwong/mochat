@@ -1,18 +1,23 @@
 seajs.use([
     'talk-client',
+    'util',
     'jquery-ui',
-    'template'
-], function (talk) {
+    'template',
+    'mousewheel'
+
+], function (talk,util) {
     var content = $('#content'),
         poText = $('#po-text'),
         poSubmit = $('#po-submit'),
-        localStorage = window.localStorage;
+        faces=$('.faces'),
+        dataStorage = util.dataStorage;
 
-    if (localStorage.getItem('face') == null){
-        localStorage.setItem('face', 0);
-        localStorage.setItem('name', '陌生人');
+
+    var user=dataStorage.get('user');
+    if ( !user){
+        dataStorage.set('user', {'face':0,'name':'陌生人'});
     }else{
-        $('#i-face').css('background-position', -parseInt(localStorage.face) * 100 + 'px 0px');
+        $('#i-face').css('background-position', -parseInt(user.face) * 100 + 'px 0px');
     }
 
     var talkClient = talk.create(
@@ -27,6 +32,9 @@ seajs.use([
                 data:data
             });
             $(html).appendTo(content);
+
+
+            //todo data['oppositeUser'] 获取对方信息
         }, //systemCallback
         function () {
             var tmp = '对方已经离开';
@@ -34,10 +42,37 @@ seajs.use([
         }    //opleaveCallback
     );
 
+
+    function facesMousewheel(event, delta, deltaX, deltaY){
+
+
+
+
+        faces.scrollLeft(faces.scrollLeft()+faces.width()*0.2*delta);
+
+
+    }
+
+
     talkClient.enterRoom('11:12');
+
     poSubmit.click(function () {
-        talkClient.sendMsg(poText.val());
+        var user=dataStorage.get('user');
+        var msg=poText.val();
+    if($.trim(msg)!=''){
+        var data={'msg':msg,
+              'time':(new Date()).toTimeString().split(' ')[0],
+              'face':user['face'],
+                'self':true};
+
+        var html = template.render('item', {
+            data:data
+        });
+        $(html).appendTo(content);
+
+        talkClient.sendMsg(msg);
         poText.val('');
+    }
 
     });
 
@@ -74,9 +109,11 @@ seajs.use([
 
     $('area').click(function () {
         var n = $(this).attr('value');
-        localStorage.setItem('face', n);
+        var user=dataStorage.get('user');
+        user['face']=n;
+        dataStorage.set('user',user);
         $('#i-face').css('background-position', -parseInt(n) * 100 + 'px 0px');
     });
-
+    faces.bind('mousewheel',facesMousewheel);
 
 });

@@ -80,8 +80,14 @@ Room.prototype = {
             user1 = this.userList[0];
             user2 = this.userList[1];
 
-            user1.socket.emit('systemMsg', {'sysMsg':Room.SYSTEMMESSAGE});
-            user2.socket.emit('systemMsg', {'sysMsg':Room.SYSTEMMESSAGE});
+            user1.socket.emit('systemMsg', {
+                'sysMsg':Room.SYSTEMMESSAGE,
+                'oppositeUser':{'face':user2.face,'name':user2.name}
+            });
+            user2.socket.emit('systemMsg', {
+                'sysMsg':Room.SYSTEMMESSAGE,
+                'oppositeUser':{'face':user1.face,'name':user1.name}
+            });
 
             user1.socket.on('msg', function (data) {
                 user2.socket.emit('msg', {'msg':messageHandle(data.msg),

@@ -7,6 +7,10 @@
  */
 define(function (require, exports, module) {
     require('socket.io');
+
+
+
+
     function Talk(msgCallback, systemCallback, opleaveCallback) {
         this.sio = io;
         this.server = 'http://localhost:3000';
@@ -40,7 +44,7 @@ define(function (require, exports, module) {
                 that.msgCallback(data);
             });
 
-            socket.emit('room_position', {'position':position});
+            socket.emit('information', {'position':position});
         },
 
         leaveRoom:function () {

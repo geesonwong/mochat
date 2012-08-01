@@ -62,7 +62,7 @@
 <!-- 聊天消息模板 -->
 <script id="item" type="text/html">
     <div class="item">
-        <div class="bubble self">
+        <div class="bubble {% if(data.self){ %}self{% } %}">
             <p>{%= data.msg %}</p>
             <span class="time">{%= data.time %}</span>
         </div>
