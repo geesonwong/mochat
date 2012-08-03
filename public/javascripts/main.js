@@ -33,13 +33,18 @@ seajs.use([
             });
             $(html).appendTo(content);
 
-
             //todo data['oppositeUser'] 获取对方信息
         }, //systemCallback
-        function () {
-            var tmp = '对方已经离开';
+        function (){
+            var tmp = '<span>对方已经离开</span>';
             $(tmp).appendTo(content);
-        }    //opleaveCallback
+        },    //opleaveCallback
+        function(){
+
+
+
+            //todo receive接收到东西后的事件
+        }
     );
 
 

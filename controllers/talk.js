@@ -8,6 +8,8 @@
 
 var os= require('os');
 
+var prepareRooms=[];
+
 function User(socket, info) {
     this.socket = socket;
     this.info = info;
@@ -44,6 +46,11 @@ Room.prototype = {
             } else {
                 return this.startTalk();
             }
+
+            if(length==1){
+                prepareRooms.push();
+            }
+
         } else {
             return Room.FULL;
         }
@@ -65,10 +72,15 @@ Room.prototype = {
             for (; i < len; i++) {
 
                 userList[_id].socket.__userListId__--;
-
             }
+
+            if(len==1){
+                prepareRooms.push();
+            }
+
             if((_id==0&&userList[0])||_id==1){
                 userList[0].socket.emit('oppositeLeave');
+
 
             }
             this.startTalk();
@@ -88,6 +100,18 @@ Room.prototype = {
                 'sysMsg':Room.SYSTEMMESSAGE,
                 'oppositeUser':{'face':user1.face,'name':user1.name}
             });
+
+
+            user1.socket.on('receive',function(){
+               user2.socket.emit('receive');
+
+            });
+
+            user2.socket.on('receive',function(){
+                user1.socket.emit('receive');
+
+            });
+
 
             user1.socket.on('msg', function (data) {
                 user2.socket.emit('msg', {'msg':messageHandle(data.msg),
@@ -113,6 +137,8 @@ Room.prototype = {
 function RoomList() {
     this.roomMap = {};
     this.init();
+
+
 }
 
 //RoomState = {

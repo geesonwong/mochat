@@ -11,7 +11,7 @@ define(function (require, exports, module) {
 
 
 
-    function Talk(msgCallback, systemCallback, opleaveCallback) {
+    function Talk(msgCallback, systemCallback, opleaveCallback,receiveCallback) {
         this.sio = io;
         this.server = 'http://localhost:3000';
         this.socket = null;
@@ -19,6 +19,7 @@ define(function (require, exports, module) {
         this.msgCallback = msgCallback;
         this.systemCallback = systemCallback;
         this.opleaveCallback = opleaveCallback;
+        this.receiveCallback=receiveCallback;
     }
 
     Talk.prototype = {
@@ -42,6 +43,12 @@ define(function (require, exports, module) {
             socket.on('msg', function (data) {
                 //todo 接到消息 msg
                 that.msgCallback(data);
+                socket.emit('receive');
+
+            });
+
+            socket.on('receive',function(){
+                that.receiveCallback();
             });
 
             socket.emit('information', {'position':position});
