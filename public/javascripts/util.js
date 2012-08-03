@@ -9,27 +9,26 @@ define(function (require, exports, module) {
     require('cookie');
 
 
-    dataStorage={
-        set:function(key,data){
-            if(typeof data =='object'){
-                data=  JSON.stringify(data);
+    dataStorage = {
+        set:function (key, data) {
+            if (typeof data == 'object') {
+                data = JSON.stringify(data);
             }
-            $.cookie(key,data,{path: '/' });
+            $.cookie(key, data, {path:'/' });
         },
-        get:function(key){
-            var data=$.cookie(key);
+        get:function (key) {
+            var data = $.cookie(key);
 
-            try{
-                data=JSON.parse(data);
-            }finally{
+            try {
+                data = JSON.parse(data);
+            } finally {
                 return data;
             }
         },
-        remove:function(key){
-           $.cookie(key,null);
+        remove:function (key) {
+            $.cookie(key, null);
         }
     }
-
 
 
     module.exports = {

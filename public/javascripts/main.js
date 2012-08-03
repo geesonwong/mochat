@@ -5,18 +5,18 @@ seajs.use([
     'template',
     'mousewheel'
 
-], function (talk,util) {
+], function (talk, util) {
     var content = $('#content'),
         poText = $('#po-text'),
         poSubmit = $('#po-submit'),
-        faces=$('.faces'),
+        faces = $('.faces'),
         dataStorage = util.dataStorage;
 
 
-    var user=dataStorage.get('user');
-    if ( !user){
-        dataStorage.set('user', {'face':0,'name':'陌生人'});
-    }else{
+    var user = dataStorage.get('user');
+    if (!user) {
+        dataStorage.set('user', {'face':0, 'name':'陌生人'});
+    } else {
         $('#i-face').css('background-position', -parseInt(user.face) * 100 + 'px 0px');
     }
 
@@ -43,12 +43,10 @@ seajs.use([
     );
 
 
-    function facesMousewheel(event, delta, deltaX, deltaY){
+    function facesMousewheel(event, delta, deltaX, deltaY) {
 
 
-
-
-        faces.scrollLeft(faces.scrollLeft()+faces.width()*0.2*delta);
+        faces.scrollLeft(faces.scrollLeft() + faces.width() * 0.2 * delta);
 
 
     }
@@ -57,22 +55,22 @@ seajs.use([
     talkClient.enterRoom('11:12');
 
     poSubmit.click(function () {
-        var user=dataStorage.get('user');
-        var msg=poText.val();
-    if($.trim(msg)!=''){
-        var data={'msg':msg,
-              'time':(new Date()).toTimeString().split(' ')[0],
-              'face':user['face'],
+        var user = dataStorage.get('user');
+        var msg = poText.val();
+        if ($.trim(msg) != '') {
+            var data = {'msg':msg,
+                'time':(new Date()).toTimeString().split(' ')[0],
+                'face':user['face'],
                 'self':true};
 
-        var html = template.render('item', {
-            data:data
-        });
-        $(html).appendTo(content);
+            var html = template.render('item', {
+                data:data
+            });
+            $(html).appendTo(content);
 
-        talkClient.sendMsg(msg);
-        poText.val('');
-    }
+            talkClient.sendMsg(msg);
+            poText.val('');
+        }
 
     });
 
@@ -109,11 +107,11 @@ seajs.use([
 
     $('area').click(function () {
         var n = $(this).attr('value');
-        var user=dataStorage.get('user');
-        user['face']=n;
-        dataStorage.set('user',user);
+        var user = dataStorage.get('user');
+        user['face'] = n;
+        dataStorage.set('user', user);
         $('#i-face').css('background-position', -parseInt(n) * 100 + 'px 0px');
     });
-    faces.bind('mousewheel',facesMousewheel);
+    faces.bind('mousewheel', facesMousewheel);
 
 });

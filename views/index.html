@@ -13,11 +13,10 @@
     <div id="header">
         <img id="u-face" class="matrix" src="http://tp2.sinaimg.cn/1577826897/180/5630306051/1">
 
-        <div id="info">
+        <div class="info">
+            <span>陌生人：如果爱，请深爱。</span>
             <span>经纬度：142' 23'</span>
             <span>地方名：古巴比仑</span>
-            <span></span>
-            <span></span>
         </div>
         <button id="leave" class="matrix">X</button>
     </div>
@@ -43,7 +42,8 @@
         <div class="profile">
             <input type="text" placeholder="取一个名字" class="radius"><button class="matrix">随机</button>
             <input type="text" placeholder="写点什么描述下自己" class="radius">
-            <div class="">静音</div>
+            <div class="matrix state" style="clear: left;width:60px">静音</div>
+            <div class="matrix state">桌面消息</div>
         </div>
     </div>
 
@@ -51,6 +51,9 @@
 
 
 </body>
+
+<bgsound loop="1" id="bgsound"/>
+
 <script type="text/javascript" src="/javascripts/seajs/sea.js"></script>
 <script type="text/javascript" src="/javascripts/init.js"></script>
 <!--<script type="text/javascript" src="/javascripts/template.min.js"></script>-->
@@ -83,6 +86,13 @@
     {% for(var i = 0; i < count; i++) { %}
     <area shape="rect" coords="{%= i*100 %},0,{%= (i+1)*100 %},100" value="{%= i %}" href="#">
     {% } %}
+</script>
+
+<!-- 对方信息和房间信息模板 -->
+<script id="info" type="text/html">
+    <span>{%=data.u.name %}{%=data.u. %}：如果爱，请深爱。</span>
+    <span>经纬度：142' 23'</span>
+    <span>地方名：古巴比仑</span>
 </script>
 
 </html> 
