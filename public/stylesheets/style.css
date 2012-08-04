@@ -8,6 +8,20 @@
     top: 0;
 }
 
+.settings {
+    position: fixed;
+    bottom: 0;
+    width: 40px;
+    height: 20px;
+    right: 20px;
+    text-align: center;
+    background-color: #90ee90;
+    font-size: 15px;
+    padding: 5px;
+    cursor: pointer;
+
+}
+
 #header, #content, #footer, #config, #map {
     border: 2px solid gray;
 }

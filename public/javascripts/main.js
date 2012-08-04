@@ -7,9 +7,14 @@ seajs.use([
 
 ], function (talk, util) {
     var content = $('#content'),
+        header = $('#header'),
         poText = $('#po-text'),
         poSubmit = $('#po-submit'),
         faces = $('.faces'),
+        board = $('#board'),
+        settings = $('.settings'),
+        iface = $('#i-face'),
+        area = $('area'),
         dataStorage = util.dataStorage;
 
 
@@ -35,33 +40,39 @@ seajs.use([
 
             //todo data['oppositeUser'] 获取对方信息
         }, //systemCallback
-        function (){
+        function () {
             var tmp = '<span>对方已经离开</span>';
             $(tmp).appendTo(content);
-        },    //opleaveCallback
-        function(){
-
-
-
+        }, //opleaveCallback
+        function () {
             //todo receive接收到东西后的事件
         }
     );
 
-
-    function facesMousewheel(event, delta, deltaX, deltaY) {
-
-
-        faces.scrollLeft(faces.scrollLeft() + faces.width() * 0.2 * delta);
-
-
-    }
-
-
     talkClient.enterRoom('11:12');
 
-    poSubmit.click(function () {
+    // 模板开始和结束标记重定义，否则跟ejs冲突
+    template.openTag = "{%";
+    template.closeTag = "%}";
+
+    // 渲染头像
+    var areas = template.render('area', {
+        count:21
+    });
+    $(areas).appendTo($('map'));
+
+    /* 下面是事件的函数 */
+
+    // 选择头像滚动滑轮的事件
+    var facesMousewheel = function (event, delta, deltaX, deltaY) {
+        faces.scrollLeft(faces.scrollLeft() - faces.width() * 0.2 * delta);
+    };
+
+    // “发送”事件
+    var send = function () {
         var user = dataStorage.get('user');
-        var msg = poText.val();
+        var val = poText.val();
+        var msg = val;
         if ($.trim(msg) != '') {
             var data = {'msg':msg,
                 'time':(new Date()).toTimeString().split(' ')[0],
@@ -76,21 +87,10 @@ seajs.use([
             talkClient.sendMsg(msg);
             poText.val('');
         }
+    };
 
-    });
-
-    // 模板开始和结束标记重定义，否则跟ejs冲突
-    template.openTag = "{%";
-    template.closeTag = "%}";
-
-//    var iFace
-
-    var areas = template.render('area', {
-        count:21
-    });
-    $(areas).appendTo($('map'));
-
-    $('#i-face').click(function () {
+    // 打开填写自己的资料的面板
+    var showConfig = function () {
         if ($('#map').css('display') != 'none')
             $('#map').hide('slide', {
                 direction:'up'
@@ -98,9 +98,10 @@ seajs.use([
         $('#config').toggle('slide', {
             direction:'down'
         }, 200);
-    });
+    };
 
-    $('#header').click(function () {
+    // 打开显示地图的面板
+    var showMap = function () {
         if ($('#config').css('display') != 'none')
             $('#config').hide('slide', {
                 direction:'down'
@@ -108,15 +109,44 @@ seajs.use([
         $('#map').toggle('slide', {
             direction:'up'
         }, 200);
-    });
+    };
 
-    $('area').click(function () {
-        var n = $(this).attr('value');
+    // 换头像的事件
+    var changeFace = function (w) {
+        var n = isNaN(w) ? $(this).attr("value") : w;
         var user = dataStorage.get('user');
         user['face'] = n;
         dataStorage.set('user', user);
         $('#i-face').css('background-position', -parseInt(n) * 100 + 'px 0px');
-    });
+    };
+
+    // 打开“设置”
+    var openSettings = function () {
+        if (board.dialog('isOpen') != true) {
+            board.dialog({
+                show:"explode",
+                hide:"explode",
+                buttons:[
+                    {
+                        text:'应用',
+                        click:function () {
+
+                        }
+                    }
+                ]
+            });
+        } else {
+            board.dialog('close');
+        }
+    };
+
+
+    poSubmit.click(send);
+    iface.click(showConfig);
+    header.click(showMap);
+    $('area').click(changeFace);
     faces.bind('mousewheel', facesMousewheel);
+    settings.click(openSettings);
+
 
 });
