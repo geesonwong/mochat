@@ -33,6 +33,8 @@ define(function (require, exports, module) {
             var that = this;//
             socket.on('global.uLeaveRoom', function (data) {
                 //todo 对方离开的处理
+                console.log(data);
+
                 that.opleaveCallback(data);
             });
 
@@ -75,10 +77,10 @@ define(function (require, exports, module) {
             } else {
                 return false;
             }
-        }
+        },
 
         sendProfile:function(data){
-            dataStorage.set(data);
+            dataStorage.set('i',data);
             socket.emit('session.iProfile',data);
         }
 

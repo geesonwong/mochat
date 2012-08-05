@@ -26,7 +26,7 @@ seajs.use([
     var room = {};
 
     if (!i) {
-        dataStorage.set('i', {'face':0, 'name':'陌生人'});
+        dataStorage.set('i', {'face':0, 'name':'陌生人','introduce':''});
     } else {
         $('#i-face').css('background-position', -parseInt(i.face) * 100 + 'px 0px');
     }
@@ -45,9 +45,8 @@ seajs.use([
                 data:data
             });
             $(html).appendTo(content);
-            u = data.oppositeUser;
-            room = data.room;
-            refreshContext();
+
+
             //todo
         };
 
@@ -64,7 +63,10 @@ seajs.use([
         };
 
         talkClient.uProfileCallback=function(data){
-
+          //  room = data.room;
+    console.log(data);
+            u = data;
+            refreshContext();
         }
 
     talkClient.enterRoom('11:12');
