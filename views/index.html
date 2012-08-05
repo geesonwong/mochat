@@ -72,7 +72,7 @@
 <script id="item" type="text/html">
     <div class="item">
         <div class="bubble {% if(data.self){ %}self{% } %}">
-            <p>{%= data.msg %}</p>
+            <p>{%= data.content %}</p>
             <span class="time">{%= data.time %}</span>
         </div>
         <div id="i-face" class="matrix"></div>
@@ -84,7 +84,7 @@
 <!-- 通知消息模板 -->
 <script id="notice" type="text/html">
     <div class="notice">
-        <p class="radius">{%=sysMsg %}</p>
+        <p class="radius">{%=data.content %}</p>
     </div>
 </script>
 

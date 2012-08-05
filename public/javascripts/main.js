@@ -31,36 +31,38 @@ seajs.use([
         $('#i-face').css('background-position', -parseInt(i.face) * 100 + 'px 0px');
     }
 
-//    var talkClient = talk.
+    var talkClient = talk.create();
 
-
-    var talkClient = talk.create(
-        function (data) {// 聊天信息
+        talkClient.msgCallback= function (data) {// 聊天信息
             var html = template.render('item', {
                 data:data
             });
             $(html).appendTo(content);
-        }, //msgCallback
-        function (data) {
+        };
+
+        talkClient.systemCallback=function (data) {
             var html = template.render('notice', {
-                sysMsg:data.sysMsg
+                data:data
             });
             $(html).appendTo(content);
             u = data.oppositeUser;
             room = data.room;
             refreshContext();
-            //todo data['oppositeUser'] 获取对方信息
-        }, //systemCallback
-        function (data) {
+            //todo
+        };
+
+        talkClient.opleaveCallback=function (data) {
             var html = template.render('notice',{
                 sysMsg:data.sysMsg
             });
             $(html).appendTo(content);
-        }, //opleaveCallback
-        function () {
+            };
+
+        talkClient.receiveCallback=function () {
+
             //todo receive接收到东西后的事件
-        }
-    );
+        };
+
 
     talkClient.enterRoom('11:12');
 
@@ -98,7 +100,7 @@ seajs.use([
         var val = poText.val();
         var msg = val;
         if ($.trim(msg) != '') {
-            var data = {'msg':msg,
+            var data = {'content':msg,
                 'time':(new Date()).toTimeString().split(' ')[0],
                 'face':i['face'],
                 'self':true};

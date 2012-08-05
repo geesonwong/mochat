@@ -29,29 +29,30 @@ define(function (require, exports, module) {
             socket = this.socket || (this.socket = this.sio.connect(this.server));
 
             var that = this;//
-            socket.on('oppositeLeave', function (data) {
+            socket.on('global.uLeaveRoom', function (data) {
                 //todo 对方离开的处理
                 that.opleaveCallback(data);
             });
 
-            socket.on('systemMsg', function (data) {
+            socket.on('global.uEnterRoom', function (data) {
                 that.talking = true;
-                //todo 显示系统消息和通知已开始对话
+                //todo 对方进入房间，并开始聊天
                 that.systemCallback(data)
             });
 
-            socket.on('msg', function (data) {
+            socket.on('session.receiveMessage', function (data) {
                 //todo 接到消息 msg
                 that.msgCallback(data);
-                socket.emit('receive');
+                socket.emit('session.responsee');
 
             });
 
-            socket.on('receive',function(){
-                that.receiveCallback();
+            socket.on('session.response',function(data){
+                //todo 对方已经收到你的消息
+                that.receiveCallback(data);
             });
 
-            socket.emit('information', {'position':position});
+            socket.emit('global.iEneterRoom', {'position':position});
         },
 
         leaveRoom:function () {
@@ -62,7 +63,7 @@ define(function (require, exports, module) {
 
         sendMsg:function (msg) {
             if (this.talking) {
-                this.socket.emit('msg', {'msg':msg});
+                this.socket.emit('session.sendMessage', {'content':msg});
                 return true;
             } else {
                 return false;
