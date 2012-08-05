@@ -15,6 +15,7 @@ define(function (require, exports, module) {
         this.server = 'http://kailiaoba.info:3000';
         this.socket = null;
         this.talking = false;
+        this.inRoom = false;
         this.msgCallback = null;
         this.uEnterRoomCallback = null;
         this.opleaveCallback = null;
@@ -28,7 +29,10 @@ define(function (require, exports, module) {
             var socket;
             socket = this.socket || (this.socket = this.sio.connect(this.server));
 
-            var that = this;//
+            var that = this;
+
+            that.inRoom = true;
+
             socket.on('global.uLeaveRoom', function (data) {
                 //todo 对方离开的处理
                 console.log(data);
@@ -63,9 +67,9 @@ define(function (require, exports, module) {
         },
 
         leaveRoom:function () {
+            this.inRoom = false;
             this.socket && this.socket.disconnect();
             this.talking = false;
-
         },
 
         sendMsg:function (msg) {

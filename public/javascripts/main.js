@@ -15,13 +15,14 @@ seajs.use([
         settings = $('.settings'),
         iface = $('#i-face'),
         area = $('area'),
+        leave = $('#leave'),
         info = $('.info'),
         dataStorage = util.dataStorage;
 
     // my profile
     var i = dataStorage.get('i');
 
-    // the other user profile
+    // the other information
     var u = {};
     var room = {};
 
@@ -64,13 +65,11 @@ seajs.use([
     };
 
     talkClient.uProfileCallback = function (data) {
-        //  room = data.room;
-        // console.log(data);
         u = data;
         refreshContext();
-    }
+    };
 
-    talkClient.enterRoom('11:12');
+
 
 
     // 渲染对方资料板
@@ -81,7 +80,9 @@ seajs.use([
         });
         info.html(html);
         $('#u-face').css('background-position', -parseInt(u.face) * 100 + 'px 0px');
-    };
+    }
+
+    ;
 
     // 模板开始和结束标记重定义，否则跟ejs冲突
     template.openTag = "{%";
@@ -172,13 +173,25 @@ seajs.use([
         }
     }
 
+    function toggleRoom(event) {
+        event.stopPropagation();
+        if (talkClient.inRoom) { // 正在聊天
+            talkClient.leaveRoom();
+            $('#leave').attr('src', '/images/connect.png');
+        } else {
+            talkClient.enterRoom('11:12');
+            $('#leave').attr('src', '/images/leave.png');
+        }
+    }
+
 
     poSubmit.click(send);
     iface.click(showConfig);
     header.click(showMap);
-    $('area').click(changeFace);
+    area.click(changeFace);
     faces.bind('mousewheel', facesMousewheel);
     settings.click(openSettings);
+    leave.click(toggleRoom);
 
 
 });
