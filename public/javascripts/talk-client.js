@@ -27,7 +27,8 @@ define(function (require, exports, module) {
 
         enterRoom:function (position) {
             var socket;
-            socket = this.socket || (this.socket = this.sio.connect(this.server));
+//            socket = this.socket || (this.socket = this.sio.connect(this.server));
+            socket = this.sio.connect(this.server);
 
             var that = this;
 

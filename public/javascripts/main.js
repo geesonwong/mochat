@@ -19,8 +19,12 @@ seajs.use([
         info = $('.info'),
         dataStorage = util.dataStorage;
 
+
+    var talkClient = talk.create();
+
     // my profile
     var i = dataStorage.get('i');
+    var setting = dataStorage.get('settings');
 
     // the other information
     var u = {};
@@ -32,14 +36,23 @@ seajs.use([
         $('#i-face').css('background-position', -parseInt(i.face) * 100 + 'px 0px');
     }
 
-    var talkClient = talk.create();
+    if (!setting || !$.isEmptyObject(setting)) {
+        setting = {
+            silence:false,
+            desktopNotice:false,
+            ctrlPo:false,
+            quickPo1:'你好！',
+            quickPo2:'很高兴认识你啊，^_^。',
+            quickPo3:'聊点别的吧～',
+            quickPo4:'嗯嗯，继续说…',
+            quickPo5:'拜拜，跟你聊天很开心！'
+        };
+        dataStorage.set('settings', setting);
+    }
 
     talkClient.msgCallback = function (data) {// 聊天信息
         data.face = parseInt(u.face);
-        var html = template.render('item', {
-            data:data
-        });
-        $(html).appendTo(content);
+        refreshContent(data);
     };
 
     talkClient.uEnterRoomCallback = function (data) {
@@ -47,8 +60,7 @@ seajs.use([
             data:data
         });
         $(html).appendTo(content);
-
-
+        content.animate({scrollTop:content[0].scrollHeight - content.height()}, 1000);
         //todo
     };
 
@@ -57,6 +69,7 @@ seajs.use([
             sysMsg:data.sysMsg
         });
         $(html).appendTo(content);
+        content.animate({scrollTop:content[0].scrollHeight - content.height()}, 1000);
     };
 
     talkClient.receiveCallback = function () {
@@ -70,8 +83,6 @@ seajs.use([
     };
 
 
-
-
     // 渲染对方资料板
     function refreshContext() {
         var html = template.render('info', {
@@ -81,8 +92,6 @@ seajs.use([
         info.html(html);
         $('#u-face').css('background-position', -parseInt(u.face) * 100 + 'px 0px');
     }
-
-    ;
 
     // 模板开始和结束标记重定义，否则跟ejs冲突
     template.openTag = "{%";
@@ -103,23 +112,25 @@ seajs.use([
 
     // “发送”事件
     function send() {
-        var i = dataStorage.get('i');
-        var val = poText.val();
-        var msg = val;
+        var msg = poText.val();
         if ($.trim(msg) != '') {
             var data = {'content':msg,
                 'time':(new Date()).toTimeString().split(' ')[0],
                 'face':i['face'],
                 'self':true};
-
-            var html = template.render('item', {
-                data:data
-            });
-            $(html).appendTo(content);
-
+            refreshContent(data);
             talkClient.sendMsg(msg);
             poText.val('');
         }
+    }
+
+    // 将message的内容显示在content中
+    function refreshContent(message) {
+        var html = template.render('item', {
+            data:message
+        });
+        $(html).appendTo(content);
+        content.animate({scrollTop:content[0].scrollHeight - content.height()}, 1000);
     }
 
     // 打开填写自己的资料的面板
@@ -173,6 +184,7 @@ seajs.use([
         }
     }
 
+    // 离开和进入房间
     function toggleRoom(event) {
         event.stopPropagation();
         if (talkClient.inRoom) { // 正在聊天
@@ -184,14 +196,21 @@ seajs.use([
         }
     }
 
+    // 发送框按键事件
+    function poTextKeyPress(event) {
+        if (event.keyCode == 13 && setting.ctrlPo == event.ctrlKey) {
+            send();
+            return false;
+        }
+    }
 
     poSubmit.click(send);
     iface.click(showConfig);
     header.click(showMap);
-    area.click(changeFace);
+    $('area').click(changeFace);
     faces.bind('mousewheel', facesMousewheel);
     settings.click(openSettings);
     leave.click(toggleRoom);
-
+    $('#po-text').keypress(poTextKeyPress);
 
 });

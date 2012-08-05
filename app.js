@@ -85,6 +85,7 @@ io.set('authorization', function (handshakeData, callback) {
         callback(null, true);
     }
 });
+
 io.sockets.on('connection', function (socket) {
     var user;
 //    if(socket.handshake.session){
