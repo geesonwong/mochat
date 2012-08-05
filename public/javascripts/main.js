@@ -26,49 +26,49 @@ seajs.use([
     var room = {};
 
     if (!i) {
-        dataStorage.set('i', {'face':0, 'name':'陌生人','introduce':''});
+        dataStorage.set('i', {'face':0, 'name':'陌生人', 'introduce':''});
     } else {
         $('#i-face').css('background-position', -parseInt(i.face) * 100 + 'px 0px');
     }
 
     var talkClient = talk.create();
 
-        talkClient.msgCallback= function (data) {// 聊天信息
-            data.face = u.face;
-            var html = template.render('item', {
-                data:data
-            });
-            $(html).appendTo(content);
-        };
+    talkClient.msgCallback = function (data) {// 聊天信息
+        data.face = parseInt(u.face);
+        var html = template.render('item', {
+            data:data
+        });
+        $(html).appendTo(content);
+    };
 
-        talkClient.systemCallback=function (data) {
-            var html = template.render('notice', {
-                data:data
-            });
-            $(html).appendTo(content);
+    talkClient.systemCallback = function (data) {
+        var html = template.render('notice', {
+            data:data
+        });
+        $(html).appendTo(content);
 
 
-            //todo
-        };
+        //todo
+    };
 
-        talkClient.opleaveCallback=function (data) {
-            var html = template.render('notice',{
-                sysMsg:data.sysMsg
-            });
-            $(html).appendTo(content);
-            };
+    talkClient.opleaveCallback = function (data) {
+        var html = template.render('notice', {
+            sysMsg:data.sysMsg
+        });
+        $(html).appendTo(content);
+    };
 
-        talkClient.receiveCallback=function () {
+    talkClient.receiveCallback = function () {
 
-            //todo receive接收到东西后的事件
-        };
+        //todo receive接收到东西后的事件
+    };
 
-        talkClient.uProfileCallback=function(data){
-          //  room = data.room;
-    console.log(data);
-            u = data;
-            refreshContext();
-        }
+    talkClient.uProfileCallback = function (data) {
+        //  room = data.room;
+        console.log(data);
+        u = data;
+        refreshContext();
+    }
 
     talkClient.enterRoom('11:12');
 
@@ -81,7 +81,9 @@ seajs.use([
         });
         info.html(html);
         $('#u-face').css('background-position', -parseInt(u.face) * 100 + 'px 0px');
-    };
+    }
+
+    ;
 
     // 模板开始和结束标记重定义，否则跟ejs冲突
     template.openTag = "{%";
@@ -101,7 +103,7 @@ seajs.use([
     }
 
     // “发送”事件
-    function send(){
+    function send() {
         var i = dataStorage.get('i');
         var val = poText.val();
         var msg = val;
@@ -144,7 +146,7 @@ seajs.use([
     }
 
     // 换头像的事件
-   function changeFace(w) {
+    function changeFace(w) {
         var n = isNaN(w) ? $(this).attr("value") : w;
         var i = dataStorage.get('i');
         i['face'] = n;
