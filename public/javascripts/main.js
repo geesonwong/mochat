@@ -31,6 +31,9 @@ seajs.use([
         $('#i-face').css('background-position', -parseInt(i.face) * 100 + 'px 0px');
     }
 
+//    var talkClient = talk.
+
+
     var talkClient = talk.create(
         function (data) {// 聊天信息
             var html = template.render('item', {
@@ -48,9 +51,9 @@ seajs.use([
             refreshContext();
             //todo data['oppositeUser'] 获取对方信息
         }, //systemCallback
-        function () {
-            var html = template.render('notice', {
-                dsysMsg:data.sysMsg
+        function (data) {
+            var html = template.render('notice',{
+                sysMsg:data.sysMsg
             });
             $(html).appendTo(content);
         }, //opleaveCallback
@@ -85,12 +88,12 @@ seajs.use([
     /* 下面是事件的函数 */
 
     // 选择头像滚动滑轮的事件
-    var facesMousewheel = function (event, delta, deltaX, deltaY) {
+    function facesMousewheel(event, delta, deltaX, deltaY) {
         faces.scrollLeft(faces.scrollLeft() - faces.width() * 0.2 * delta);
     };
 
     // “发送”事件
-    var send = function () {
+    function send(){
         var i = dataStorage.get('i');
         var val = poText.val();
         var msg = val;
@@ -111,7 +114,7 @@ seajs.use([
     };
 
     // 打开填写自己的资料的面板
-    var showConfig = function () {
+    function showConfig() {
         if ($('#map').css('display') != 'none')
             $('#map').hide('slide', {
                 direction:'up'
@@ -122,7 +125,7 @@ seajs.use([
     };
 
     // 打开显示地图的面板
-    var showMap = function () {
+    function showMap() {
         if ($('#config').css('display') != 'none')
             $('#config').hide('slide', {
                 direction:'down'
@@ -133,7 +136,7 @@ seajs.use([
     };
 
     // 换头像的事件
-    var changeFace = function (w) {
+   function changeFace(w) {
         var n = isNaN(w) ? $(this).attr("value") : w;
         var i = dataStorage.get('i');
         i['face'] = n;
@@ -142,7 +145,7 @@ seajs.use([
     };
 
     // 打开“设置”
-    var openSettings = function () {
+    function openSettings() {
         if (board.dialog('isOpen') != true) {
             board.dialog({
                 show:"explode",
@@ -151,6 +154,7 @@ seajs.use([
                     {
                         text:'应用',
                         click:function () {
+
                         }
                     }
                 ]
