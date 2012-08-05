@@ -27,49 +27,62 @@ define(function (require, exports, module) {
 
         enterRoom:function (position) {
             var socket;
-//            socket = this.socket || (this.socket = this.sio.connect(this.server));
-            socket = this.sio.connect(this.server);
-
             var that = this;
 
-            that.inRoom = true;
+           if(!this.socket) {
+               socket =  this.socket = this.sio.connect(this.server);
+               socket.on('global.uLeaveRoom', function (data) {
+                   //todo 对方离开的处理
+                   console.log(data);
 
-            socket.on('global.uLeaveRoom', function (data) {
-                //todo 对方离开的处理
-                console.log(data);
+                   that.opleaveCallback(data);
+               });
 
-                that.opleaveCallback(data);
-            });
+               socket.on('global.uEnterRoom', function (data) {
+                   that.talking = true;
+                   //todo 对方进入房间，并开始聊天
+                   that.uEnterRoomCallback(data)
+               });
 
-            socket.on('global.uEnterRoom', function (data) {
-                that.talking = true;
-                //todo 对方进入房间，并开始聊天
-                that.uEnterRoomCallback(data)
-            });
+               socket.on('session.receiveMessage', function (data) {
+                   //todo 接到消息 msg
+                   that.msgCallback(data);
+                   socket.emit('session.responsee');
 
-            socket.on('session.receiveMessage', function (data) {
-                //todo 接到消息 msg
-                that.msgCallback(data);
-                socket.emit('session.responsee');
+               });
 
-            });
+               socket.on('session.response', function (data) {
+                   //todo 对方已经收到你的消息
+                   that.receiveCallback(data);
+               });
 
-            socket.on('session.response', function (data) {
-                //todo 对方已经收到你的消息
-                that.receiveCallback(data);
-            });
+               socket.on('session.uProfile', function (data) {
+                   that.uProfileCallback(data);
+               });
+           }
+            else{
+               socket=this.socket;
+               socket.socket.connect();
+           }
 
-            socket.on('session.uProfile', function (data) {
-                that.uProfileCallback(data);
-            });
 
 
-            socket.emit('global.iEneterRoom', {'position':position});
+
+    that.inRoom = true;
+
+
+
+
+    socket.emit('global.iEneterRoom', {'position':position});
+
+
+
         },
 
         leaveRoom:function () {
             this.inRoom = false;
             this.socket && this.socket.disconnect();
+
             this.talking = false;
         },
 

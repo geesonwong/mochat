@@ -199,6 +199,7 @@ RoomList.prototype = {
         this.roomMap[position] = undefined;
     },
     enter:function (user, position) {
+        console.log(user+' enter')
         var room = this.roomMap[position];
         if (room) {
             return room.addUser(user);
