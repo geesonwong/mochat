@@ -7,9 +7,7 @@
  */
 define(function (require, exports, module) {
     require('socket.io');
-    var dataStorage=require('util').dataStorage;
-
-
+    var dataStorage = require('util').dataStorage;
 
 
     function Talk() {
@@ -17,11 +15,11 @@ define(function (require, exports, module) {
         this.server = 'http://localhost:3000';
         this.socket = null;
         this.talking = false;
-        this.msgCallback=null;
-        this.uEnterRoomCallback=null;
-        this.opleaveCallback =null;
-        this.receiveCallback=null;
-        this.uProfileCallback=null;
+        this.msgCallback = null;
+        this.uEnterRoomCallback = null;
+        this.opleaveCallback = null;
+        this.receiveCallback = null;
+        this.uProfileCallback = null;
     }
 
     Talk.prototype = {
@@ -51,12 +49,12 @@ define(function (require, exports, module) {
 
             });
 
-            socket.on('session.response',function(data){
+            socket.on('session.response', function (data) {
                 //todo 对方已经收到你的消息
                 that.receiveCallback(data);
             });
 
-            socket.on('session.uProfile',function(data){
+            socket.on('session.uProfile', function (data) {
                 that.uProfileCallback(data);
             });
 
@@ -79,9 +77,9 @@ define(function (require, exports, module) {
             }
         },
 
-        sendProfile:function(data){
-            dataStorage.set('i',data);
-            socket.emit('session.iProfile',data);
+        sendProfile:function (data) {
+            dataStorage.set('i', data);
+            socket.emit('session.iProfile', data);
         }
 
     }
