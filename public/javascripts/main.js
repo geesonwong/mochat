@@ -41,7 +41,7 @@ seajs.use([
         $(html).appendTo(content);
     };
 
-    talkClient.systemCallback = function (data) {
+    talkClient.uEnterRoomCallback = function (data) {
         var html = template.render('notice', {
             data:data
         });
