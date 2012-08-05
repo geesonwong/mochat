@@ -63,6 +63,9 @@ seajs.use([
             //todo receive接收到东西后的事件
         };
 
+        talkClient.uProfileCallback=function(data){
+
+        }
 
     talkClient.enterRoom('11:12');
 
@@ -92,7 +95,7 @@ seajs.use([
     // 选择头像滚动滑轮的事件
     function facesMousewheel(event, delta, deltaX, deltaY) {
         faces.scrollLeft(faces.scrollLeft() - faces.width() * 0.2 * delta);
-    };
+    }
 
     // “发送”事件
     function send(){
@@ -113,7 +116,7 @@ seajs.use([
             talkClient.sendMsg(msg);
             poText.val('');
         }
-    };
+    }
 
     // 打开填写自己的资料的面板
     function showConfig() {
@@ -124,7 +127,7 @@ seajs.use([
         $('#config').toggle('slide', {
             direction:'down'
         }, 200);
-    };
+    }
 
     // 打开显示地图的面板
     function showMap() {
@@ -135,7 +138,7 @@ seajs.use([
         $('#map').toggle('slide', {
             direction:'up'
         }, 200);
-    };
+    }
 
     // 换头像的事件
    function changeFace(w) {
@@ -144,7 +147,7 @@ seajs.use([
         i['face'] = n;
         dataStorage.set('i', i);
         $('#i-face').css('background-position', -parseInt(n) * 100 + 'px 0px');
-    };
+    }
 
     // 打开“设置”
     function openSettings() {
@@ -164,7 +167,7 @@ seajs.use([
         } else {
             board.dialog('close');
         }
-    };
+    }
 
 
     poSubmit.click(send);

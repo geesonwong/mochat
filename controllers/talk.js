@@ -111,9 +111,9 @@ Room.prototype = {
                 'face':user1.face
             });
             user1.socket.emit('session.uProfile',{
-                'name':user1.name,
-                'introduce':user1.introduce,
-                'face':user1.face
+                'name':user2.name,
+                'introduce':user2.introduce,
+                'face':user2.face
             });
 
 
