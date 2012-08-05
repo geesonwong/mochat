@@ -40,8 +40,8 @@ seajs.use([
 
             //todo data['oppositeUser'] 获取对方信息
         }, //systemCallback
-        function () {
-            var tmp = '<span>对方已经离开</span>';
+        function (data) {
+            var tmp = '<span>data.sysMsg</span>';
             $(tmp).appendTo(content);
         }, //opleaveCallback
         function () {
@@ -64,12 +64,12 @@ seajs.use([
     /* 下面是事件的函数 */
 
     // 选择头像滚动滑轮的事件
-    var facesMousewheel = function (event, delta, deltaX, deltaY) {
+    function facesMousewheel(event, delta, deltaX, deltaY) {
         faces.scrollLeft(faces.scrollLeft() - faces.width() * 0.2 * delta);
     };
 
     // “发送”事件
-    var send = function () {
+    function send(){
         var user = dataStorage.get('user');
         var val = poText.val();
         var msg = val;
@@ -90,7 +90,7 @@ seajs.use([
     };
 
     // 打开填写自己的资料的面板
-    var showConfig = function () {
+    function showConfig() {
         if ($('#map').css('display') != 'none')
             $('#map').hide('slide', {
                 direction:'up'
@@ -101,7 +101,7 @@ seajs.use([
     };
 
     // 打开显示地图的面板
-    var showMap = function () {
+    function showMap() {
         if ($('#config').css('display') != 'none')
             $('#config').hide('slide', {
                 direction:'down'
@@ -112,7 +112,7 @@ seajs.use([
     };
 
     // 换头像的事件
-    var changeFace = function (w) {
+   function changeFace(w) {
         var n = isNaN(w) ? $(this).attr("value") : w;
         var user = dataStorage.get('user');
         user['face'] = n;
@@ -121,7 +121,7 @@ seajs.use([
     };
 
     // 打开“设置”
-    var openSettings = function () {
+    function openSettings() {
         if (board.dialog('isOpen') != true) {
             board.dialog({
                 show:"explode",
