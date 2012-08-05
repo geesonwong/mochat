@@ -72,7 +72,7 @@
 <script id="item" type="text/html">
     <div class="item">
         <div class="bubble {% if(data.self){ %}self{% } %}">
-            <p>{%= data.msg %}</p>
+            <p>{%= data.content %}</p>
             <span class="time">{%= data.time %}</span>
         </div>
         <img src="http://tp1.sinaimg.cn/1494932200/180/5601623669/1"
@@ -83,7 +83,7 @@
 <!-- 通知消息模板 -->
 <script id="notice" type="text/html">
     <div class="notice">
-        <p class="radius">{%=data.sysMsg %}</p>
+        <p class="radius">{%=data.content %}</p>
     </div>
 </script>
 

@@ -25,29 +25,34 @@ seajs.use([
         $('#i-face').css('background-position', -parseInt(user.face) * 100 + 'px 0px');
     }
 
-    var talkClient = talk.create(
-        function (data) {// 聊天信息
+    var talkClient = talk.create();
+
+        talkClient.msgCallback= function (data) {// 聊天信息
             var html = template.render('item', {
                 data:data
             });
             $(html).appendTo(content);
-        }, //msgCallback
-        function (data) {
+        };
+
+        talkClient.systemCallback=function (data) {
             var html = template.render('notice', {
                 data:data
             });
             $(html).appendTo(content);
 
-            //todo data['oppositeUser'] 获取对方信息
-        }, //systemCallback
-        function (data) {
-            var tmp = '<span>data.sysMsg</span>';
-            $(tmp).appendTo(content);
-        }, //opleaveCallback
-        function () {
+            //todo
+        };
+
+        talkClient.opleaveCallback=function (data) {
+                var tmp = '<span>+data.content+</span>';
+                $(tmp).appendTo(content);
+            };
+
+        talkClient.receiveCallback=function () {
+
             //todo receive接收到东西后的事件
-        }
-    );
+        };
+
 
     talkClient.enterRoom('11:12');
 
@@ -66,7 +71,7 @@ seajs.use([
     // 选择头像滚动滑轮的事件
     function facesMousewheel(event, delta, deltaX, deltaY) {
         faces.scrollLeft(faces.scrollLeft() - faces.width() * 0.2 * delta);
-    };
+    }
 
     // “发送”事件
     function send(){
@@ -74,7 +79,7 @@ seajs.use([
         var val = poText.val();
         var msg = val;
         if ($.trim(msg) != '') {
-            var data = {'msg':msg,
+            var data = {'content':msg,
                 'time':(new Date()).toTimeString().split(' ')[0],
                 'face':user['face'],
                 'self':true};
@@ -87,7 +92,7 @@ seajs.use([
             talkClient.sendMsg(msg);
             poText.val('');
         }
-    };
+    }
 
     // 打开填写自己的资料的面板
     function showConfig() {
@@ -98,7 +103,7 @@ seajs.use([
         $('#config').toggle('slide', {
             direction:'down'
         }, 200);
-    };
+    }
 
     // 打开显示地图的面板
     function showMap() {
@@ -109,7 +114,7 @@ seajs.use([
         $('#map').toggle('slide', {
             direction:'up'
         }, 200);
-    };
+    }
 
     // 换头像的事件
    function changeFace(w) {
@@ -118,7 +123,7 @@ seajs.use([
         user['face'] = n;
         dataStorage.set('user', user);
         $('#i-face').css('background-position', -parseInt(n) * 100 + 'px 0px');
-    };
+    }
 
     // 打开“设置”
     function openSettings() {
@@ -138,7 +143,7 @@ seajs.use([
         } else {
             board.dialog('close');
         }
-    };
+    }
 
 
     poSubmit.click(send);

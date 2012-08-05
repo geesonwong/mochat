@@ -102,8 +102,7 @@ io.sockets.on('connection', function (socket) {
     }
 
     user.socket = socket;
-    socket.on('information', function (data) {
-
+    socket.on('global.iEneterRoom', function (data) {
         roomlist.enter(user, data['position']);
     })
 

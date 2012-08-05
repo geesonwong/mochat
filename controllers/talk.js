@@ -28,6 +28,7 @@ Room.WAIT_TOMANY = 2;
 Room.WAIT_LACKUSER = 3;
 Room.SYSTEMMESSAGE = '你们可以开始聊天了';
 Room.FULL = 4;
+Room.SYSTEMMESSAGE_LEAVE='对方已经离开';
 
 Room.prototype = {
     constructor:Room,
@@ -79,10 +80,12 @@ Room.prototype = {
             }
 
             if((_id==0&&userList[0])||_id==1){
-                userList[0].socket.emit('oppositeLeave');
-
-
+                userList[0].socket.emit('global.uLeaveRoom',{
+                    'content':Room.SYSTEMMESSAGE_LEAVE,
+                    'time':getTime()
+                });
             }
+
             this.startTalk();
         }
     },
@@ -92,37 +95,67 @@ Room.prototype = {
             user1 = this.userList[0];
             user2 = this.userList[1];
 
-            user1.socket.emit('systemMsg', {
-                'sysMsg':Room.SYSTEMMESSAGE,
-                'oppositeUser':{'face':user2.face,'name':user2.name}
+            user1.socket.emit('global.uEnterRoom', {
+                'content':Room.SYSTEMMESSAGE,
+                'time':getTime()
             });
-            user2.socket.emit('systemMsg', {
-                'sysMsg':Room.SYSTEMMESSAGE,
-                'oppositeUser':{'face':user1.face,'name':user1.name}
-            });
-
-
-            user1.socket.on('receive',function(){
-               user2.socket.emit('receive');
-
+            user2.socket.emit('global.uEnterRoom', {
+                'content':Room.SYSTEMMESSAGE,
+                'time':getTime()
             });
 
-            user2.socket.on('receive',function(){
-                user1.socket.emit('receive');
+            //系统发送对方资料给你
+            user2.socket.emit('session.uProfile',{
+                'name':user1.name,
+                'introduce':user1.introduce,
+                'face':user1.face
+            });
+            user1.socket.emit('session.uProfile',{
+                'name':user1.name,
+                'introduce':user1.introduce,
+                'face':user1.face
+            });
+
+
+
+
+            user1.socket.on('session.iProfile',function(data){
+                user2.socket.emit('session.uProfile',data);
+
+            });
+
+            user2.socket.on('session.iProfile',function(data){
+                user1.socket.emit('session.uProfile',data);
 
             });
 
 
-            user1.socket.on('msg', function (data) {
-                user2.socket.emit('msg', {'msg':messageHandle(data.msg),
-                                          'time':(new Date(os.uptime())).toTimeString().split(' ')[0],
-                                          'face':0});
+            user1.socket.on('session.response',function(){
+               user2.socket.emit('session.response');
+
             });
 
-            user2.socket.on('msg', function (data) {
-                user1.socket.emit('msg',  {'msg':messageHandle(data.msg),
-                                            'time':(new Date(os.uptime())).toTimeString().split(' ')[0],
-                                            'face':0});
+            user2.socket.on('session.response',function(){
+                user1.socket.emit('session.response');
+
+            });
+
+
+
+
+
+            user1.socket.on('session.sendMessage', function (data) {
+                user2.socket.emit('session.receiveMessage', {
+                                          'content':messageHandle(data.content),
+                                          'time':getTime()
+                                          });
+            });
+
+            user2.socket.on('session.sendMessage', function (data) {
+                user1.socket.emit('session.receiveMessage',  {
+                                            'content':messageHandle(data.content),
+                                            'time':getTime()
+                                            });
             });
 
             return Room.STAER;
@@ -182,6 +215,11 @@ RoomList.prototype = {
 function messageHandle(message) {
     //:todo 对话数据处理
     return message;
+}
+
+
+function getTime(){
+    return (new Date(os.uptime())).toTimeString().split(' ')[0];
 }
 
 
