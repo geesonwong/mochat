@@ -18,7 +18,7 @@ define(function (require, exports, module) {
         this.socket = null;
         this.talking = false;
         this.msgCallback=null;
-        this.systemCallback=null;
+        this.uEnterRoomCallback=null;
         this.opleaveCallback =null;
         this.receiveCallback=null;
         this.uProfileCallback=null;
@@ -41,7 +41,7 @@ define(function (require, exports, module) {
             socket.on('global.uEnterRoom', function (data) {
                 that.talking = true;
                 //todo 对方进入房间，并开始聊天
-                that.systemCallback(data)
+                that.uEnterRoomCallback(data)
             });
 
             socket.on('session.receiveMessage', function (data) {

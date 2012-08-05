@@ -65,7 +65,7 @@ seajs.use([
 
     talkClient.uProfileCallback = function (data) {
         //  room = data.room;
-        console.log(data);
+        // console.log(data);
         u = data;
         refreshContext();
     }
@@ -81,9 +81,7 @@ seajs.use([
         });
         info.html(html);
         $('#u-face').css('background-position', -parseInt(u.face) * 100 + 'px 0px');
-    }
-
-    ;
+    };
 
     // 模板开始和结束标记重定义，否则跟ejs冲突
     template.openTag = "{%";
