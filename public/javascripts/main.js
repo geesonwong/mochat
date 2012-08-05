@@ -34,6 +34,7 @@ seajs.use([
     var talkClient = talk.create();
 
         talkClient.msgCallback= function (data) {// 聊天信息
+            data.face = u.face;
             var html = template.render('item', {
                 data:data
             });
