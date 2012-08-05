@@ -7,19 +7,21 @@
  */
 define(function (require, exports, module) {
     require('socket.io');
+    var dataStorage=require('util').dataStorage;
 
 
 
 
-    function Talk(msgCallback, systemCallback, opleaveCallback,receiveCallback) {
+    function Talk() {
         this.sio = io;
         this.server = 'http://localhost:3000';
         this.socket = null;
         this.talking = false;
-        this.msgCallback = msgCallback;
-        this.systemCallback = systemCallback;
-        this.opleaveCallback = opleaveCallback;
-        this.receiveCallback=receiveCallback;
+        this.msgCallback=null;
+        this.systemCallback=null;
+        this.opleaveCallback =null;
+        this.receiveCallback=null;
+        this.uProfileCallback=null;
     }
 
     Talk.prototype = {
@@ -52,6 +54,11 @@ define(function (require, exports, module) {
                 that.receiveCallback(data);
             });
 
+            socket.on('session.uProfile',function(data){
+                that.uProfileCallback(data);
+            });
+
+
             socket.emit('global.iEneterRoom', {'position':position});
         },
 
@@ -70,10 +77,15 @@ define(function (require, exports, module) {
             }
         }
 
+        sendProfile:function(data){
+            dataStorage.set(data);
+            socket.emit('session.iProfile',data);
+        }
+
     }
     module.exports = {
-        create:function (msgCallback, systemCallback, opleaveCallback) {
-            return new Talk(msgCallback, systemCallback, opleaveCallback);
+        create:function () {
+            return new Talk();
         }
     };
 });

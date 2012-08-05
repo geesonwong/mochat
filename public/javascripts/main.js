@@ -20,7 +20,7 @@ seajs.use([
 
     var user = dataStorage.get('user');
     if (!user) {
-        dataStorage.set('user', {'face':0, 'name':'陌生人'});
+        dataStorage.set('user', {'face':0, 'name':'陌生人','introduce':''});
     } else {
         $('#i-face').css('background-position', -parseInt(user.face) * 100 + 'px 0px');
     }
@@ -44,7 +44,7 @@ seajs.use([
         };
 
         talkClient.opleaveCallback=function (data) {
-                var tmp = '<span>+data.content+</span>';
+                var tmp = '<span>'+data.content+'</span>';
                 $(tmp).appendTo(content);
             };
 
@@ -53,6 +53,9 @@ seajs.use([
             //todo receive接收到东西后的事件
         };
 
+        talkClient.uProfileCallback=function(data){
+
+        }
 
     talkClient.enterRoom('11:12');
 
