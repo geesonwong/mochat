@@ -12,7 +12,7 @@ define(function (require, exports, module) {
 
     function Talk() {
         this.sio = io;
-        this.server = 'http://localhost:3000';
+        this.server = 'http://kailiaoba.info:3000';
         this.socket = null;
         this.talking = false;
         this.msgCallback = null;
