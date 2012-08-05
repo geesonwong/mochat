@@ -15,14 +15,20 @@ seajs.use([
         settings = $('.settings'),
         iface = $('#i-face'),
         area = $('area'),
+        info = $('.info'),
         dataStorage = util.dataStorage;
 
+    // my profile
+    var i = dataStorage.get('i');
 
-    var user = dataStorage.get('user');
-    if (!user) {
-        dataStorage.set('user', {'face':0, 'name':'陌生人'});
+    // the other user profile
+    var u = {};
+    var room = {};
+
+    if (!i) {
+        dataStorage.set('i', {'face':0, 'name':'陌生人'});
     } else {
-        $('#i-face').css('background-position', -parseInt(user.face) * 100 + 'px 0px');
+        $('#i-face').css('background-position', -parseInt(i.face) * 100 + 'px 0px');
     }
 
     var talkClient = talk.create(
@@ -34,15 +40,19 @@ seajs.use([
         }, //msgCallback
         function (data) {
             var html = template.render('notice', {
-                data:data
+                sysMsg:data.sysMsg
             });
             $(html).appendTo(content);
-
+            u = data.oppositeUser;
+            room = data.room;
+            refreshContext();
             //todo data['oppositeUser'] 获取对方信息
         }, //systemCallback
         function () {
-            var tmp = '<span>对方已经离开</span>';
-            $(tmp).appendTo(content);
+            var html = template.render('notice', {
+                dsysMsg:data.sysMsg
+            });
+            $(html).appendTo(content);
         }, //opleaveCallback
         function () {
             //todo receive接收到东西后的事件
@@ -50,6 +60,17 @@ seajs.use([
     );
 
     talkClient.enterRoom('11:12');
+
+
+    // 渲染对方资料板
+    function refreshContext() {
+        var html = template.render('info', {
+            u:u,
+            room:room
+        });
+        info.html(html);
+        $('#u-face').css('background-position', -parseInt(u.face) * 100 + 'px 0px');
+    };
 
     // 模板开始和结束标记重定义，否则跟ejs冲突
     template.openTag = "{%";
@@ -70,13 +91,13 @@ seajs.use([
 
     // “发送”事件
     var send = function () {
-        var user = dataStorage.get('user');
+        var i = dataStorage.get('i');
         var val = poText.val();
         var msg = val;
         if ($.trim(msg) != '') {
             var data = {'msg':msg,
                 'time':(new Date()).toTimeString().split(' ')[0],
-                'face':user['face'],
+                'face':i['face'],
                 'self':true};
 
             var html = template.render('item', {
@@ -114,9 +135,9 @@ seajs.use([
     // 换头像的事件
     var changeFace = function (w) {
         var n = isNaN(w) ? $(this).attr("value") : w;
-        var user = dataStorage.get('user');
-        user['face'] = n;
-        dataStorage.set('user', user);
+        var i = dataStorage.get('i');
+        i['face'] = n;
+        dataStorage.set('i', i);
         $('#i-face').css('background-position', -parseInt(n) * 100 + 'px 0px');
     };
 
@@ -130,7 +151,6 @@ seajs.use([
                     {
                         text:'应用',
                         click:function () {
-
                         }
                     }
                 ]

@@ -192,6 +192,7 @@
     -moz-border-radius-topleft: 25px;
     border-top-left-radius: 25px;
     border: 3px solid #B7B7B7;
+    background-image: url("/images/faces.jpg");
 }
 
 .info {

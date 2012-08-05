@@ -29,9 +29,9 @@ define(function (require, exports, module) {
             socket = this.socket || (this.socket = this.sio.connect(this.server));
 
             var that = this;//
-            socket.on('oppositeLeave', function () {
+            socket.on('oppositeLeave', function (data) {
                 //todo 对方离开的处理
-                that.opleaveCallback();
+                that.opleaveCallback(data);
             });
 
             socket.on('systemMsg', function (data) {
@@ -69,7 +69,8 @@ define(function (require, exports, module) {
             }
         }
 
-    }
+    };
+
     module.exports = {
         create:function (msgCallback, systemCallback, opleaveCallback) {
             return new Talk(msgCallback, systemCallback, opleaveCallback);

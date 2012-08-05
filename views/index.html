@@ -11,7 +11,7 @@
 
 <div class="wrap">
     <div id="header">
-        <img id="u-face" class="matrix" src="http://tp2.sinaimg.cn/1577826897/180/5630306051/1">
+        <img id="u-face" class="matrix">
 
         <div class="info">
             <span>陌生人：如果爱，请深爱。</span>
@@ -83,7 +83,7 @@
 <!-- 通知消息模板 -->
 <script id="notice" type="text/html">
     <div class="notice">
-        <p class="radius">{%=data.sysMsg %}</p>
+        <p class="radius">{%=sysMsg %}</p>
     </div>
 </script>
 
@@ -96,9 +96,9 @@
 
 <!-- 对方信息和房间信息模板 -->
 <script id="info" type="text/html">
-    <span>{%=data.u.name %}{%=data.u. %}：如果爱，请深爱。</span>
-    <span>经纬度：142' 23'</span>
-    <span>地方名：古巴比仑</span>
+    <span>{%=u.name %}：如果爱，请深爱。</span>
+    <span>地点：{%=room.name %}</span>
+    <span>经纬度：{%=room.geographic %}</span>
 </script>
 
 </html> 
