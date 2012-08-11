@@ -9,7 +9,7 @@
     var alias = {
         'jquery':'jquery/jquery-1.7.2.min.js',
         'jquery-ui':'jquery/jquery-ui-1.8.22.custom.min.js',
-        'socket.io':'socket.io.min.js',
+        'socket.io':'socket.io.js',
         'main':'main.js',
         'talk':'talk-client.js',
         'template':'template.min.js',
