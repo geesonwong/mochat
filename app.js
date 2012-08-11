@@ -92,7 +92,6 @@ io.sockets.on('connection', function (socket) {
 //        user= socket.handshake.session.user;
 //        user.socket=socket;
 //    }
-
     var cookie = parseCookie(socket.handshake.headers.cookie);
     user = cookie['user'];
     if (user) {

@@ -69,10 +69,9 @@ define(function (require, exports, module) {
         },
 
         leaveRoom:function () {
-            this.inRoom = false;
             this.socket && this.socket.disconnect();
-
             this.talking = false;
+            this.inRoom = false;
         },
 
         sendMsg:function (msg) {
@@ -85,9 +84,9 @@ define(function (require, exports, module) {
         },
 
         sendProfile:function (data) {
-            if (!data) {
-                data = dataStorage.get('i');
-            }
+            if (!this.socket)
+                return false;
+            data == null ? dataStorage.get('i') : data;
             this.socket.emit('session.iProfile', data);
         }
 

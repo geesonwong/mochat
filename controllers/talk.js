@@ -6,9 +6,9 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var os= require('os');
+var os = require('os');
 
-var prepareRooms=[];
+var prepareRooms = [];
 
 function User(socket, info) {
     this.socket = socket;
@@ -16,19 +16,27 @@ function User(socket, info) {
 }
 
 
-function Room(position, max) {
+function Room(position, name, mode, max) {
     this.position = position;
     this.userList = [];
+    this.name = name;
+    this.mode = mode ? mode : 0;
     this.max = max ? max : 1000;
-
-
 }
+
 Room.STAER = 1;
 Room.WAIT_TOMANY = 2;
 Room.WAIT_LACKUSER = 3;
-Room.SYSTEMMESSAGE = '你们可以开始聊天了';
 Room.FULL = 4;
-Room.SYSTEMMESSAGE_LEAVE='对方已经离开';
+
+Room.SYSTEMMESSAGE = '你们可以开始聊天了';
+Room.SYSTEMMESSAGE_LEAVE = '对方已经离开';
+
+Room.MODE = {
+    P2P:0, //双人聊天
+    CLUB:1, //多人聊天
+    MEETING:2 //招待会（实际上就是一个人跟多个人聊天）
+};
 
 Room.prototype = {
     constructor:Room,
@@ -48,7 +56,7 @@ Room.prototype = {
                 return this.startTalk();
             }
 
-            if(length==1){
+            if (length == 1) {
                 prepareRooms.push();
             }
 
@@ -56,31 +64,30 @@ Room.prototype = {
             return Room.FULL;
         }
     },
+
     removeUser:function (socket) {
-        if (socket.__userListId__!==undefined) {
+        if (socket.__userListId__ !== undefined) {
             var _id = socket.__userListId__;
             var userList = this.userList;
-            var len,i;
+            var len, i;
 
             userList.splice(_id, 1);
 
             //正在聊天中离开，必须通知对方
 
-
             len = userList.length;
-            i=_id;
+            i = _id;
 
             for (; i < len; i++) {
-
                 userList[_id].socket.__userListId__--;
             }
 
-            if(len==1){
+            if (len == 1) {
                 prepareRooms.push();
             }
 
-            if((_id==0&&userList[0])||_id==1){
-                userList[0].socket.emit('global.uLeaveRoom',{
+            if ((_id == 0 && userList[0]) || _id == 1) {
+                userList[0].socket.emit('global.uLeaveRoom', {
                     'content':Room.SYSTEMMESSAGE_LEAVE,
                     'time':getTime()
                 });
@@ -89,6 +96,7 @@ Room.prototype = {
             this.startTalk();
         }
     },
+
     startTalk:function () {
         var user1, user2;
         if (this.userList.length == 2) {
@@ -105,52 +113,48 @@ Room.prototype = {
             });
 
             //系统发送对方资料给你
-            user2.socket.emit('session.uProfile',{
+            user2.socket.emit('session.uProfile', {
                 'name':user1.name,
                 'introduce':user1.introduce,
                 'face':user1.face
             });
-            user1.socket.emit('session.uProfile',{
+            user1.socket.emit('session.uProfile', {
                 'name':user2.name,
                 'introduce':user2.introduce,
                 'face':user2.face
             });
 
-            user1.socket.on('session.iProfile',function(data){
-                user2.socket.emit('session.uProfile',data);
+            user1.socket.on('session.iProfile', function (data) {
+                user2.socket.emit('session.uProfile', data);
 
             });
 
-            user2.socket.on('session.iProfile',function(data){
-                user1.socket.emit('session.uProfile',data);
+            user2.socket.on('session.iProfile', function (data) {
+                user1.socket.emit('session.uProfile', data);
             });
 
 
-            user1.socket.on('session.response',function(){
-               user2.socket.emit('session.response');
+            user1.socket.on('session.response', function () {
+                user2.socket.emit('session.response');
 
             });
 
-            user2.socket.on('session.response',function(){
+            user2.socket.on('session.response', function () {
                 user1.socket.emit('session.response');
             });
 
-
-
-
-
             user1.socket.on('session.sendMessage', function (data) {
                 user2.socket.emit('session.receiveMessage', {
-                                          'content':messageHandle(data.content),
-                                          'time':getTime()
-                                          });
+                    'content':messageHandle(data.content),
+                    'time':getTime()
+                });
             });
 
             user2.socket.on('session.sendMessage', function (data) {
-                user1.socket.emit('session.receiveMessage',  {
-                                            'content':messageHandle(data.content),
-                                            'time':getTime()
-                                            });
+                user1.socket.emit('session.receiveMessage', {
+                    'content':messageHandle(data.content),
+                    'time':getTime()
+                });
             });
 
             return Room.STAER;
@@ -165,15 +169,7 @@ Room.prototype = {
 function RoomList() {
     this.roomMap = {};
     this.init();
-
-
 }
-
-//RoomState = {
-//    EXIST : 1,
-//    SUCCESS : 2,
-//    NOFAND : 3
-//}
 
 RoomList.EXIST = 1;
 RoomList.SUCCESS = 2;
@@ -182,9 +178,9 @@ RoomList.NOFAND = 3;
 
 RoomList.prototype = {
     constructor:RoomList,
-    add:function (position, max) {
+    add:function (position, name, mode, max) {
         if (!this.roomMap[position]) {
-            this.roomMap[position] = new Room(position, max);
+            this.roomMap[position] = new Room(position, name, mode, max);
             return RoomList.SUCCESS;
         } else {
             return RoomList.EXIST;
@@ -194,7 +190,7 @@ RoomList.prototype = {
         this.roomMap[position] = undefined;
     },
     enter:function (user, position) {
-        console.log(user+' enter')
+        console.log('===' + getTime() + user + ' enter');
         var room = this.roomMap[position];
         if (room) {
             return room.addUser(user);
@@ -214,7 +210,7 @@ function messageHandle(message) {
 }
 
 
-function getTime(){
+function getTime() {
     return (new Date(os.uptime())).toTimeString().split(' ')[0];
 }
 

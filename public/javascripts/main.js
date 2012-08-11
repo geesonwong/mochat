@@ -19,23 +19,21 @@ seajs.use([
         info = $('.info'),
         dataStorage = util.dataStorage;
 
+    // 模板开始和结束标记重定义，否则跟ejs冲突
+    template.openTag = "{%";
+    template.closeTag = "%}";
 
     var talkClient = talk.create();
 
     // my profile
     var i = dataStorage.get('i');
-    var setting = dataStorage.get('settings');
-
-    // the other information
-    var u = {};
-    var room = {};
-
     if (!i) {
         dataStorage.set('i', {'face':0, 'name':'陌生人', 'introduce':''});
     } else {
         $('#i-face').css('background-position', -parseInt(i.face) * 100 + 'px 0px');
     }
 
+    var setting = dataStorage.get('settings');
     if (!setting || !$.isEmptyObject(setting)) {
         setting = {
             silence:false,
@@ -49,6 +47,11 @@ seajs.use([
         };
         dataStorage.set('settings', setting);
     }
+
+
+    // the other information
+    var u = {};
+    var room = {};
 
     talkClient.msgCallback = function (data) {// 聊天信息
         data.face = parseInt(u.face);
@@ -85,9 +88,6 @@ seajs.use([
         $('#u-face').css('background-position', -parseInt(u.face) * 100 + 'px 0px');
     }
 
-    // 模板开始和结束标记重定义，否则跟ejs冲突
-    template.openTag = "{%";
-    template.closeTag = "%}";
 
     // 渲染头像
     var areas = template.render('area', {
