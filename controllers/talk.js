@@ -116,9 +116,6 @@ Room.prototype = {
                 'face':user2.face
             });
 
-
-
-
             user1.socket.on('session.iProfile',function(data){
                 user2.socket.emit('session.uProfile',data);
 
@@ -126,7 +123,6 @@ Room.prototype = {
 
             user2.socket.on('session.iProfile',function(data){
                 user1.socket.emit('session.uProfile',data);
-
             });
 
 
@@ -137,7 +133,6 @@ Room.prototype = {
 
             user2.socket.on('session.response',function(){
                 user1.socket.emit('session.response');
-
             });
 
 

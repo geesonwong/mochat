@@ -56,20 +56,12 @@ seajs.use([
     };
 
     talkClient.uEnterRoomCallback = function (data) {
-        var html = template.render('notice', {
-            data:data
-        });
-        $(html).appendTo(content);
-        content.animate({scrollTop:content[0].scrollHeight - content.height()}, 1000);
+        refreshContent(data,true);
         //todo
     };
 
     talkClient.opleaveCallback = function (data) {
-        var html = template.render('notice', {
-            sysMsg:data.sysMsg
-        });
-        $(html).appendTo(content);
-        content.animate({scrollTop:content[0].scrollHeight - content.height()}, 1000);
+        refreshContent(data,true);
     };
 
     talkClient.receiveCallback = function () {
@@ -125,10 +117,16 @@ seajs.use([
     }
 
     // 将message的内容显示在content中
-    function refreshContent(message) {
-        var html = template.render('item', {
-            data:message
-        });
+    function refreshContent(message, type) {
+        if(type){
+            var html = template.render('notice', {
+                data:message
+            });
+        }else{
+            var html = template.render('item', {
+                data:message
+            });
+        }
         $(html).appendTo(content);
         content.animate({scrollTop:content[0].scrollHeight - content.height()}, 1000);
     }
@@ -158,9 +156,9 @@ seajs.use([
     // 换头像的事件
     function changeFace(w) {
         var n = isNaN(w) ? $(this).attr("value") : w;
-        var i = dataStorage.get('i');
         i['face'] = n;
         dataStorage.set('i', i);
+        talkClient.sendProfile(i);
         $('#i-face').css('background-position', -parseInt(n) * 100 + 'px 0px');
     }
 
@@ -193,6 +191,7 @@ seajs.use([
         } else {
             talkClient.enterRoom('11:12');
             $('#leave').attr('src', '/images/leave.png');
+            talkClient.sendProfile(i);
         }
     }
 

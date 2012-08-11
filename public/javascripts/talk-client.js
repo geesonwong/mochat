@@ -29,54 +29,43 @@ define(function (require, exports, module) {
             var socket;
             var that = this;
 
-           if(!this.socket) {
-               socket =  this.socket = this.sio.connect(this.server);
-               socket.on('global.uLeaveRoom', function (data) {
-                   //todo 对方离开的处理
-                   console.log(data);
+            if (!this.socket) {
+                socket = this.socket = this.sio.connect(this.server);
+                socket.on('global.uLeaveRoom', function (data) {
+                    //todo 对方离开的处理
+                    console.log(data);
 
-                   that.opleaveCallback(data);
-               });
+                    that.opleaveCallback(data);
+                });
 
-               socket.on('global.uEnterRoom', function (data) {
-                   that.talking = true;
-                   //todo 对方进入房间，并开始聊天
-                   that.uEnterRoomCallback(data)
-               });
+                socket.on('global.uEnterRoom', function (data) {
+                    that.talking = true;
+                    //todo 对方进入房间，并开始聊天
+                    that.uEnterRoomCallback(data)
+                });
 
-               socket.on('session.receiveMessage', function (data) {
-                   //todo 接到消息 msg
-                   that.msgCallback(data);
-                   socket.emit('session.responsee');
+                socket.on('session.receiveMessage', function (data) {
+                    //todo 接到消息 msg
+                    that.msgCallback(data);
+                    socket.emit('session.responsee');
 
-               });
+                });
 
-               socket.on('session.response', function (data) {
-                   //todo 对方已经收到你的消息
-                   that.receiveCallback(data);
-               });
+                socket.on('session.response', function (data) {
+                    //todo 对方已经收到你的消息
+                    that.receiveCallback(data);
+                });
 
-               socket.on('session.uProfile', function (data) {
-                   that.uProfileCallback(data);
-               });
-           }
-            else{
-               socket=this.socket;
-               socket.socket.connect();
-           }
-
-
-
-
-    that.inRoom = true;
-
-
-
-
-    socket.emit('global.iEneterRoom', {'position':position});
-
-
-
+                socket.on('session.uProfile', function (data) {
+                    that.uProfileCallback(data);
+                });
+            }
+            else {
+                socket = this.socket;
+                socket.socket.connect();
+            }
+            that.inRoom = true;
+            socket.emit('global.iEneterRoom', {'position':position});
         },
 
         leaveRoom:function () {
@@ -96,8 +85,10 @@ define(function (require, exports, module) {
         },
 
         sendProfile:function (data) {
-            dataStorage.set('i', data);
-            socket.emit('session.iProfile', data);
+            if (!data) {
+                data = dataStorage.get('i');
+            }
+            this.socket.emit('session.iProfile', data);
         }
 
     }
