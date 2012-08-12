@@ -49,14 +49,12 @@
 </div>
 
 <div class="settings">
-    设置
-</div>
-<div id="board" title="设置" style="display: none">
-    <div class="state"><label>静音<input type="checkbox" style="float: right"></label></div>
-    <div class="state"><label>桌面消息<input type="checkbox" style="float: right"></label></div>
-    <div class="state"><label>ctrl+Enter发送<input type="checkbox" style="float: right"></label></div>
-    <div class="state"><label>ctrl+1 快捷回复<input type="text" style="float: right"></label></div>
-    <div class="state"><label>ctrl+2 快捷回复<input type="text" style="float: right"></label></div>
+    <div class="guide"></div>
+    <div class="state">静音<div class="checkbox"></div></div>
+    <div class="state">桌面消息<div class="checkbox"></div></div>
+    <div class="state">ctrl+Enter发送<div class="checkbox"></div></div>
+    <div class="state">ctrl+1 快捷回复<input type="text" style="float: right"></div>
+    <div class="state">ctrl+2 快捷回复<input type="text" style="float: right"></div>
 </div>
 
 </body>
@@ -92,7 +90,7 @@
 <!-- 图片热点模板 -->
 <script id="area" type="text/html">
     {% for(var i = 0; i < count; i++) { %}
-    <area shape="rect" coords="{%= i*100 %},0,{%= (i+1)*100 %},100" value="{%= i %}" href="#">
+    <area shape="rect" coords="{%= i*100 %},0,{%= (i+1)*100 %},100" value="{%= i %}">
     {% } %}
 </script>
 

@@ -59,12 +59,12 @@ seajs.use([
     };
 
     talkClient.uEnterRoomCallback = function (data) {
-        refreshContent(data,true);
+        refreshContent(data, true);
         //todo
     };
 
     talkClient.opleaveCallback = function (data) {
-        refreshContent(data,true);
+        refreshContent(data, true);
     };
 
     talkClient.receiveCallback = function () {
@@ -99,6 +99,7 @@ seajs.use([
 
     // 选择头像滚动滑轮的事件
     function facesMousewheel(event, delta, deltaX, deltaY) {
+        event.stopPropagation();
         faces.scrollLeft(faces.scrollLeft() - faces.width() * 0.2 * delta);
     }
 
@@ -118,11 +119,11 @@ seajs.use([
 
     // 将message的内容显示在content中
     function refreshContent(message, type) {
-        if(type){
+        if (type) {
             var html = template.render('notice', {
                 data:message
             });
-        }else{
+        } else {
             var html = template.render('item', {
                 data:message
             });
@@ -162,25 +163,33 @@ seajs.use([
         $('#i-face').css('background-position', -parseInt(n) * 100 + 'px 0px');
     }
 
-    // 打开“设置”
+    // 打开“设置”面板
     function openSettings() {
-        if (board.dialog('isOpen') != true) {
-            board.dialog({
-                show:"explode",
-                hide:"explode",
-                buttons:[
-                    {
-                        text:'应用',
-                        click:function () {
+        settings.addClass('active-settings');
+        $('.settings .guide').addClass('active-guide');
+    }
 
-                        }
-                    }
-                ]
-            });
+    // 关闭“设置”面板
+    function closeSettings() {
+        settings.removeClass('active-settings');
+        $('.settings .guide').removeClass('active-guide');
+    }
+
+    // 打开关闭“设置”
+    function toggleSettings(event, delta) {
+        if (delta) {
+            if (delta > 0)
+                openSettings();
+            else
+                closeSettings();
         } else {
-            board.dialog('close');
+            if (settings.hasClass('active-settings'))
+                closeSettings();
+            else
+                openSettings();
         }
     }
+
 
     // 离开和进入房间
     function toggleRoom(event) {
@@ -195,6 +204,10 @@ seajs.use([
         }
     }
 
+    function stopPropagation(event) {
+        event.stopPropagation();
+    }
+
     // 发送框按键事件
     function poTextKeyPress(event) {
         if (event.keyCode == 13 && setting.ctrlPo == event.ctrlKey) {
@@ -203,13 +216,15 @@ seajs.use([
         }
     }
 
+    $('html').bind('mousewheel', toggleSettings);
     poSubmit.click(send);
     iface.click(showConfig);
     header.click(showMap);
     $('area').click(changeFace);
     faces.bind('mousewheel', facesMousewheel);
-    settings.click(openSettings);
+    $('.guide').click(toggleSettings);
     leave.click(toggleRoom);
     $('#po-text').keypress(poTextKeyPress);
+    content.bind('mousewheel', stopPropagation);
 
 });

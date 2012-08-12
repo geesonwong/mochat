@@ -1,3 +1,7 @@
+body {
+    overflow-x: hidden;
+}
+
 .wrap {
     margin-right: auto;
     width: 960px;
@@ -9,17 +13,61 @@
 }
 
 .settings {
-    position: fixed;
+    position: absolute;
     bottom: 0;
-    width: 40px;
-    height: 20px;
-    right: 20px;
-    text-align: center;
-    background-color: #90ee90;
-    font-size: 15px;
-    padding: 5px;
+    top: 0;
+    padding: 40px 0px 0px 60px;
+    width: 500px;
+    right: -500px;
+    background-color: #ffffff;
     cursor: pointer;
+    z-index: 200;
+    border-left: 1px solid #a8a8a8;
+    transition: .2s ease-out;
+    -webkit-transition: .2s ease-out;
+    -moz-transition: .2s ease-out;
+}
 
+.guide {
+    height: 100%;
+    width: 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #e8e8e8;
+    background-image: url("/images/backward.png");
+    background-position: left;
+    background-repeat: no-repeat;
+    transition: .2s ease-out;
+    -webkit-transition: .2s ease-out;
+    -moz-transition: .2s ease-out;
+}
+
+.guide:hover {
+    background-color: #dddddd;
+}
+
+.active-settings {
+    right: 0;
+}
+
+.settings .state {
+    margin-left: 50px;
+    font-size: 25px;
+    height: 50px;
+    width: 400px;
+}
+
+.settings .checkbox,input {
+    width: 40px;
+    height: 40px;
+    border: 3px solid gray;
+    float: right;
+}
+
+.active-guide {
+    background-image: url("/images/forward.png");
+    background-color: #f0f0f0;
 }
 
 #header, #content, #footer, #config, #map {
@@ -60,9 +108,9 @@
     -webkit-border-top-right-radius: 25px;
     -moz-border-radius-topright: 25px;
     border-top-right-radius: 25px;
-    box-shadow: 0 10px 20px gray;
-    -moz-box-shadow: 0 10 20px gray;
-    -webkit-box-shadow: 0 10px 20px gray;
+    box-shadow: 0 5px 10px gray;
+    -moz-box-shadow: 0 5 10px gray;
+    -webkit-box-shadow: 0 5px 10px gray;
     z-index: 200;
     border-bottom: 0;
 }
@@ -145,7 +193,6 @@
     /*background: -o-linear-gradient(top, 0 #FDFDFD, 100% #E2E4E9);*/
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FDFDFD), color-stop(100%, #E2E4E9));
 }
-
 
 .face-mini {
     width: 50px;
