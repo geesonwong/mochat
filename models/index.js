@@ -1,33 +1,34 @@
 var mongo = require('mongoskin');
-var config = require('../config').config;
+var dbc = require('../config').config.dbc;
 
-//mongo.(config.dbc.host + ':' + config.dbc.port + '/' + config.dbc.dbc);
-mongo.SkinDb
-//
-//mongoose.connect(config.db, function (err) {
-//  if (err) {
-//    console.error('connect to %s error: ', config.db, err.message);
-//    process.exit(1);
-//  }
-//});
-//
-//// models
-//require('./tag');
-//require('./user');
-//require('./topic');
-//require('./topic_tag');
-//require('./reply');
-//require('./topic_collect');
-//require('./tag_collect');
-//require('./relation');
-//require('./message');
-//
-//exports.Tag = mongoose.model('Tag');
-//exports.User = mongoose.model('User');
-//exports.Topic = mongoose.model('Topic');
-//exports.TopicTag = mongoose.model('TopicTag');
-//exports.Reply = mongoose.model('Reply');
-//exports.TopicCollect = mongoose.model('TopicCollect');
-//exports.TagCollect = mongoose.model('TagCollect');
-//exports.Relation = mongoose.model('Relation');
-//exports.Message = mongoose.model('Message');
+var connection = dbc.host + ':' + dbc.port + '/' + dbc.db;
+
+var db = mongo.db(connection);
+var skinDb = new mongo.SkinDb(db, dbc.username, dbc.password);
+
+skinDb.open(function (err, db) {
+    if (err) {
+        console.log('====== skinDb.open : connect server faild, err:' + err);
+        process.exit(1);
+    }
+});
+
+/*数据库自检，目前只检查集合个数*/
+skinDb.collectionNames(function (err, collections) {
+    if (err)
+        console.log('====== skinDb.collectionNames : list collections faild, err:' + err);
+    console.log('====== count of collections is:' + collections.length);
+    if (collections.length != dbc.collections_count) {//检查失败，需要重建数据库
+        /* room */
+        db.createCollection('room', function (err, collection) {
+            if (err)
+                console.log('====== skinDb.collectionNames : create collection faild, err:' + err);
+        })
+    }
+})
+
+//skinDb.collection('room').indexInformation(function (err, indexInfo) {
+//    if (err)
+//        console.log('====== skinDb.collectionNames : list collections faild, err:' + err);
+//    console.log('====== count of collections is:' + indexInfo);
+//})
