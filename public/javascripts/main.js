@@ -27,31 +27,40 @@ seajs.use([
 
     // my profile
     var i = dataStorage.get('i');
-    if (!i) {
-        dataStorage.set('i', {'face':0, 'name':'陌生人', 'introduce':''});
-    } else {
-        $('#i-face').css('background-position', -parseInt(i.face) * 100 + 'px 0px');
-    }
 
     var setting = dataStorage.get('settings');
-    if (!setting || !$.isEmptyObject(setting)) {
-        setting = {
-            silence:false,
-            desktopNotice:false,
-            ctrlPo:false,
-            quickPo1:'你好！',
-            quickPo2:'很高兴认识你啊，^_^。',
-            quickPo3:'聊点别的吧～',
-            quickPo4:'嗯嗯，继续说…',
-            quickPo5:'拜拜，跟你聊天很开心！'
-        };
-        dataStorage.set('settings', setting);
-    }
-
 
     // the other information
     var u = {};
     var room = {};
+
+    // information initial
+    function init() {
+        if (!i) {
+            i = {'face':0, 'name':'陌生人', 'introduce':''};
+        } else {
+            $('#i-face').css('background-position', -parseInt(i.face) * 100 + 'px 0px');
+        }
+        if (!setting || !$.isEmptyObject(setting)) {
+            setting = {
+                silence:false,
+                desktopNotice:false,
+                ctrlPo:false,
+                quickPo1:'你好！',
+                quickPo2:'很高兴认识你啊，^_^。',
+                quickPo3:'聊点别的吧～',
+                quickPo4:'嗯嗯，继续说…',
+                quickPo5:'拜拜，跟你聊天很开心！'
+            };
+        }
+
+    }
+
+    // save info to datastorage when tab/window closed
+    $(window).unload(function () {
+        dataStorage.set('settings', setting);
+        dataStorage.set('i', i);
+    });
 
     talkClient.msgCallback = function (data) {// 聊天信息
         data.face = parseInt(u.face);
@@ -158,7 +167,6 @@ seajs.use([
     function changeFace(w) {
         var n = isNaN(w) ? $(this).attr("value") : w;
         i['face'] = n;
-        dataStorage.set('i', i);
         talkClient.sendProfile(i);
         $('#i-face').css('background-position', -parseInt(n) * 100 + 'px 0px');
     }
@@ -190,6 +198,18 @@ seajs.use([
         }
     }
 
+    function checkOn() {
+        var checkbox = $(this)[0];
+        if (checkbox.style.backgroundColor == '') {
+            checkbox.style.backgroundColor = 'lightgray';
+            setting[checkbox.getAttribute('value')] = true;
+        } else {
+            checkbox.style.backgroundColor = '';
+            setting[checkbox.getAttribute('value')] = false;
+        }
+
+    }
+
 
     // 离开和进入房间
     function toggleRoom(event) {
@@ -210,12 +230,14 @@ seajs.use([
 
     // 发送框按键事件
     function poTextKeyPress(event) {
-        if (event.keyCode == 13 && setting.ctrlPo == event.ctrlKey) {
+        if ((event.keyCode == 13 || event.keyCode == 10) && setting.ctrlPo == event.ctrlKey) {
             send();
             return false;
         }
     }
 
+
+    init();
     $('html').bind('mousewheel', toggleSettings);
     poSubmit.click(send);
     iface.click(showConfig);
@@ -226,5 +248,7 @@ seajs.use([
     leave.click(toggleRoom);
     $('#po-text').keypress(poTextKeyPress);
     content.bind('mousewheel', stopPropagation);
+    $('.checkbox').click(checkOn);
+
 
 });

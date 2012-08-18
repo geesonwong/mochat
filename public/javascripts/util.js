@@ -8,13 +8,14 @@
 define(function (require, exports, module) {
     require('cookie');
 
+    var expiresTime = new Date().getTime() + 30 * 24 * 60 * 60 * 1000;
 
     dataStorage = {
         set:function (key, data) {
             if (typeof data == 'object') {
                 data = JSON.stringify(data);
             }
-            $.cookie(key, data, {path:'/' });
+            $.cookie(key, data, {path:'/', expires:expiresTime });
         },
         get:function (key) {
             var data = $.cookie(key);
