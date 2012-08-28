@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>开聊吧！</title>
+    <meta charset="utf-8">
+    <link rel='stylesheet' href='/stylesheets/_style.css'/>
+    <link rel='stylesheet' href='/stylesheets/jquery/jquery-ui-1.8.21.custom.css'/>
+    <link rel="shortcut icon" type="image/x-icon" href="http://demo.sc.chinaz.com/Files/pic/iconsico/4736/chat.ico">
+</head>
+<body>
+
+<div class="wrap">
+    <div id="header">
+        <img id="u-face" class="matrix">
+
+        <div class="info">
+            <span>陌生人：如果爱，请深爱。</span>
+            <span>经纬度：142' 23'</span>
+            <span>地方名：古巴比仑</span>
+        </div>
+        <img id="leave" class="matrix" src="/images/connect.png">
+    </div>
+    <div id="map">
+
+    </div>
+
+    <div id="content">
+    </div>
+
+    <div id="footer">
+        <div id="i-face" class="matrix"></div>
+        <textarea id="po-text"></textarea>
+        <button id="po-submit" class="matrix">发送</button>
+    </div>
+
+
+    <div id="config">
+        <div class="faces">
+            <img width="" src="/images/faces.jpg" usemap="#faces">
+            <map name="faces"></map>
+        </div>
+        <div class="profile">
+            <input type="text" placeholder="取一个名字" class="radius">
+            <button class="matrix">随机</button>
+            <input type="text" placeholder="写点什么描述下自己" class="radius">
+        </div>
+    </div>
+
+</div>
+
+<div class="settings">
+    <div class="guide"></div>
+    <div class="state">静音<div class="checkbox" value="silence"></div></div>
+    <div class="state">桌面消息<div class="checkbox" value="desktopNotice"></div></div>
+    <div class="state">ctrl+Enter发送<div class="checkbox" value="ctrlPo"></div></div>
+    <div class="state">ctrl+1 快捷回复<input type="text" style="float: right"></div>
+    <div class="state">ctrl+2 快捷回复<input type="text" style="float: right"></div>
+</div>
+
+</body>
+
+<bgsound loop="1" id="bgsound"/>
+
+<script type="text/javascript" src="/javascripts/seajs/sea.js"></script>
+<script type="text/javascript" src="/javascripts/init.js"></script>
+<!--<script type="text/javascript" src="/javascripts/template.min.js"></script>-->
+<script type="text/javascript" src="/javascripts/main.js"></script>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<!-- 聊天消息模板 -->
+<script id="item" type="text/html">
+    <div class="item">
+        <div class="bubble {% if(data.self){ %}self{% } %}">
+            <p>{%= data.content %}</p>
+            <span class="time">{%= data.time %}</span>
+        </div>
+        <div class="face-mini matrix" style="background-position:{%= -data.face*50 %}px 0px"></div>
+    </div>
+</script>
+
+<!-- 通知消息模板 -->
+<script id="notice" type="text/html">
+    <div class="notice">
+        <p class="radius">{%=data.content %}</p>
+    </div>
+</script>
+
+<!-- 图片热点模板 -->
+<script id="area" type="text/html">
+    {% for(var i = 0; i < count; i++) { %}
+    <area shape="rect" coords="{%= i*100 %},0,{%= (i+1)*100 %},100" value="{%= i %}">
+    {% } %}
+</script>
+
+<!-- 对方信息和房间信息模板 -->
+<script id="info" type="text/html">
+    <span>{%=u.name %}：如果爱，请深爱。</span>
+    <span>地点：{%=room.name %}</span>
+    <span>经纬度：{%=room.geographic %}</span>
+</script>
+
+</html> 

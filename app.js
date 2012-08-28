@@ -47,6 +47,7 @@ app.locals({
 });
 
 app.get('/', routes.index);
+app.get('/p', routes.indexP);
 
 var server = http.createServer(app).listen(app.get('port'), function () {
     console.log("服务器已启动，监听端口号：" + app.get('port'));
