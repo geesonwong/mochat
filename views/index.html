@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>mochat</title>
+</head>
+<body>
+<textarea name="board" id="board" cols="30" rows="10"></textarea>
+<button>start</button>
+<button>end</button>
+<input type="text" name="content" id="content"/>
+<button>send</button>
+
+<script src="/lib/socket-io/socket.io.js"></script>
+<script>
+    var socket = io.connect('http://localhost');
+    socket.on('news', function (data) {
+        console.log(data);
+        socket.emit('my other event', { my: 'data' });
+    });
+</script>
+
+</body>
+</html>

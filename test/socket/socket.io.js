@@ -776,7 +776,7 @@ Socket.prototype.onpacket = function(packet){
       this.ondisconnect();
       break;
 
-    case parser.ERROR:
+    case parser.RESULT:
       this.emit('error', packet.data);
       break;
   }
@@ -4839,7 +4839,7 @@ exports.types = [
   'EVENT',
   'BINARY_EVENT',
   'ACK',
-  'ERROR'
+  'RESULT'
 ];
 
 /**
@@ -4880,7 +4880,7 @@ exports.ACK = 3;
  * @api public
  */
 
-exports.ERROR = 4;
+exports.RESULT = 4;
 
 /**
  * Packet type 'binary event'
@@ -5174,7 +5174,7 @@ BinaryReconstructor.prototype.finishedReconstruction = function() {
 
 function error(data){
   return {
-    type: exports.ERROR,
+    type: exports.RESULT,
     data: 'parser error'
   };
 }
