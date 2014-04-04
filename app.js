@@ -3,18 +3,18 @@
  */
 
 var express = require('express')
-    , routes = require('./routes')
+    , route = require('./route')
     , http = require('http')
     , path = require('path')
     , io = require('socket.io')
     , MemoryStore = express.session.MemoryStore
     , parseCookie = require('express/node_modules/cookie').parse
-    , talkModule = require('./controllers/talk.js')
+    , talkModule = require('./controller/talk.js')
     , RoomList = talkModule.RoomList;
 // ,Room=talkModule.Room;
 
 var storeMemory = new MemoryStore({
-    reapInterval:60000 * 10
+    reapInterval: 60000 * 10
 });
 
 var roomlist = new RoomList();
@@ -31,7 +31,7 @@ app.configure(function () {
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(express.cookieParser('air'));
-    app.use(express.session({store:storeMemory}));
+    app.use(express.session({store: storeMemory}));
     app.use(app.router);
     app.use(express.static(path.join(__dirname, 'public')));
 });
@@ -42,12 +42,13 @@ app.configure('development', function () {
 
 // 应用的常量，可以在模板中直接取到值
 app.locals({
-    const:{
+    const: {
     }
 });
 
-app.get('/', routes.index);
-app.get('/p', routes.indexP);
+app.get('/', route.index);
+app.get('/p', route.indexP);
+app.get('/o', route.old);
 
 var server = http.createServer(app).listen(app.get('port'), function () {
     console.log("服务器已启动，监听端口号：" + app.get('port'));
@@ -97,9 +98,9 @@ io.sockets.on('connection', function (socket) {
     user = cookie['user'];
     if (user) {
         //parseCookie的返回值不能写
-        user = {'face':user.face, 'name':user.name};
+        user = {'face': user.face, 'name': user.name};
     } else {
-        user = {'face':0, 'name':'陌生人'}
+        user = {'face': 0, 'name': '陌生人'}
     }
 
     user.socket = socket;
