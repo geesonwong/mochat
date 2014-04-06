@@ -1,3 +1,5 @@
+var os = require('os');
+
 function Room(position, name, mode, max) {
     this.position = position;
     this.name = name;
@@ -9,7 +11,7 @@ function Room(position, name, mode, max) {
 Room.MODE = {
     P2P: 0, //双人聊天
     CLUB: 1, //多人聊天
-    MEETING: 2 //招待会（实际上就是一个人跟多个人聊天）
+    MEETING: 2 //招待会（一个人跟多个人聊天）
 };
 
 Room.MESSAGE = {
@@ -42,8 +44,8 @@ Room.prototype = {
         });
 
         // 4. 通知其他 socket，该用户已经离开
-        for (var oSocket in this.socketList) {
-            oSocket.emit('news', {
+        for (var o in this.socketList) {
+            this.socketList[o].emit('news', {
                 content: socket.$userName || '对方' + '已经离开',
                 time: getTime()
             });
@@ -54,15 +56,16 @@ Room.prototype = {
 
     addSocket: function (socket) {
         // 1. 如果满了，就返回错误
-        if (this.socketList.length = this.max)
+        if (this.socketList.length == this.max)
             return Room.RESULT.FULL;
 
         // 2. 添加这个用户
         this.socketList.push(socket);
 
         // 3. 断开的话要去掉这个用户
+        var room = this;
         socket.on('disconnect', function () {
-            this.removeSocket(socket);
+            room.removeSocket(socket);
         });
 
         // 4. socket 中加入 room 标识
@@ -75,25 +78,24 @@ Room.prototype = {
         if (this.socketList.length < 2)
             return Room.RESULT.NOT_ENOUGH_MEMBER;
 
-        for (var oSocket in this.socketList) {
-            oSocket.on('send', function (data) {
+        for (var o in this.socketList) { // TODO 这里可能有重复安装监听器
+            list = this.socketList;
+            this.socketList[o].on('send', function (data) {
                 if (!data.content)
                     return;
-                for (var pSocket in this.socketList) {
-                    pSocket.emit('msg', {
+                for (var p in list) {
+                    list[p].emit('msg', {
                         content: data.content,
-                        sender: oSocket.id
+                        sender: this.id
                     })
                 }
             });
         }
-
     }
-
 };
 
 function getTime() {
     return (new Date(os.uptime())).toTimeString().split(' ')[0];
 }
 
-exports.Room = Room;
+exports = module.exports = Room;

@@ -1,0 +1,99 @@
+<html>
+<head>
+    <title>开聊吧 | …</title>
+    <meta charset="utf-8">
+    <link rel='stylesheet' href='/stylesheet/mac/mac.css'/>
+    <link rel='stylesheet' href='/lib/jquery-ui/css/smoothness/jquery-ui-1.10.4.custom.min.css'/>
+    <link rel='stylesheet' href='/lib/jquery/jquery-1.11.0.min.map'/>
+    <link rel="shortcut icon" type="image/x-icon" href="<%=faviconUrl%>">
+</head>
+<body>
+
+<div class="wrap radius-7">
+    <div class="top-panel linear-gray">
+        <div class="title">今天天气不错</div>
+        <div id="i-profile" class="radius-3 linear-gray">
+            <img src="http://avatar.3sd.me/30"> 冯诺伊森
+        </div>
+    </div>
+    <div class="main-panel">
+        <div class="left-panel">
+            <div class="setting">
+                <div class="button"></div>
+                <div class="button"></div>
+                <div class="button"></div>
+            </div>
+            <div class="users-list">
+                <div class="user">
+                    <img class="face radius-3" src="http://tp4.sinaimg.cn/1739839932/180/0/5616683556" alt="">
+                    <span class="name">匿名用户</span>
+                </div>
+                <div class="user active">
+                    <img class="face radius-3" src="http://tp1.sinaimg.cn/1774310572/50/5621785388/1" alt="">
+                    <span class="name">匿名用户</span>
+                </div>
+                <div class="user">
+                    <img class="face radius-3" src="http://tp3.sinaimg.cn/1728220510/50/39996259879/0" alt="">
+                    <span class="name">匿名用户</span>
+                </div>
+                <div class="user">
+                    <img class="face radius-3" src="http://tp3.sinaimg.cn/1856246354/50/5632586192/0" alt="">
+                    <span class="name">匿名用户</span>
+                </div>
+                <div class="user">
+                    <img class="face radius-3" src="http://tp3.sinaimg.cn/1856246354/50/5632586192/0" alt="">
+                    <span class="name">匿名用户</span>
+                </div>
+            </div>
+            <div class="rooms-list">
+            </div>
+        </div>
+        <div class="right-panel">
+            <div class="u-info">
+                <img class="u-face radius-3" src="http://tp1.sinaimg.cn/1774310572/50/5621785388/1" alt="">
+
+                <div class="u-description">
+                    <span style="font-size: 18px;font-weight: bold;">匿名用户</span><br>
+                    <span style="font-size: 10px">hello would you like to have a sex ?</span>
+                </div>
+                <div class="button"></div>
+                <div class="button"></div>
+                <div class="button"></div>
+            </div>
+            <div class="chat" id="chat-board">
+            </div>
+            <div class="po">
+                <textarea name="po-content" id="" class="radius-7">fasdfasd</textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/lib/requirejs/require.js" data-main="/javascript/mac/main"></script>
+<script type="text/html" id="rich-msg-tpl">
+    <div class="message">
+        <img class="face" src="http://avatar.3sd.me/40">
+
+        <div class="content">
+            <span style="font-size: 18px">{{=nickname}}</span>
+            <span style="font-size: 12px;color: #808080;"> - {{=time}}</span><br>
+            {{=content}}
+        </div>
+    </div>
+</script>
+<script type="text/html" id="simple-msg-tpl">
+    <div class="message {{=color}}">
+        <div class="simple-content">
+            <span style="font-size: 18px">{{=nickname}}</span>
+            <span style="font-size: 12px;color: #808080;"> ({{=time}})</span>
+            <br>{{=content}}<br>
+        </div>
+    </div>
+</script>
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+</body>
+
+</html>

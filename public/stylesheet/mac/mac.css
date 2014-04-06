@@ -23,38 +23,26 @@ body {
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ebebeb), color-stop(100%, #d0d0d0));
 }
 
-.select {
-    text-align: right;
-    vertical-align: middle;
-    border: 1px solid gray;
-    cursor: pointer;
-    margin: 5px 10px 5px 10px;
-    font-size: 10px;
-    height: 20px;
-    float: right;
-    max-width: 150px;
-    padding: 5px;
+.brown {
+    color: #b4540e;
+}
+
+.blue {
+    color: #3b8efd;
 }
 
 .button {
-    background-image: url("/images/icons.png");
+    background-image: url("/image/icons.png");
     width: 32px;
     height: 32px;
-    margin: 5px;
     float: left;
+    margin-right: 5px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
     border: 1px solid #c4c4c4;
     background-color: #ececec;
     cursor: pointer;
-}
-
-.board {
-    width: 300px;
-    height: 500px;
-    position: absolute;
-
 }
 
 .wrap {
@@ -85,28 +73,32 @@ body {
     border-top-right-radius: 7px;
 }
 
+.main-panel {
+    background-image: url("/image/main-bg.png");
+    background-repeat: no-repeat;
+    border-top: 1px solid #888888;
+    position: absolute;
+    bottom: 0;
+}
+
 .left-panel {
     width: 199px;
     height: 545px;
-    position: absolute;
     left: 0;
     bottom: 0;
-    background-image: url("/images/left-panel-bg.png");
-    background-repeat: no-repeat;
+    float: left;
     -webkit-border-bottom-left-radius: 7px;
     -moz-border-radius-bottomleft: 7px;
     border-bottom-left-radius: 7px;
     border-right: 1px solid #c4c4c4;
 }
 
-.main-panel {
-    position: absolute;
+.right-panel {
+    float: left;
     bottom: 0;
     right: 0;
     width: 600px;
     height: 545px;
-    background-image: url("/images/main-panel-bg.png");
-    background-repeat: no-repeat;
     -webkit-border-bottom-right-radius: 7px;
     -moz-border-radius-bottomright: 7px;
     border-bottom-right-radius: 7px;
@@ -114,17 +106,27 @@ body {
 
 /*-------------------*/
 #i-profile {
-    width: 90px;
-    padding-right: 20px;
+    float: right;
+    max-width: 450px;
+    min-width: 80px;
+    text-align: right;
+    border: 1px solid gray;
+    cursor: pointer;
+    margin: 5px 10px 5px 10px;
+    font-size: 14px;
+    height: 20px;
+    padding: 5px;
 }
 
 #i-profile img {
     float: left;
     width: 20px;
     height: 20px;
+    margin-right: 10px;
 }
 
 .top-panel .title {
+    display: none;
     width: 250px;
     margin: 10px auto 5px auto;
     position: absolute;
@@ -132,7 +134,7 @@ body {
     margin-left: -125px;
 }
 
-.main-panel .u-info {
+.right-panel .u-info {
     width: 580px;
     height: 85px;
     padding-right: 20px;
@@ -140,10 +142,11 @@ body {
     box-shadow: 0 0 5px gray;
     -moz-box-shadow: 0 0 5px gray;
     -webkit-box-shadow: 0 0 5px gray;
+    display: none;
 }
 
 .left-panel .setting {
-    padding: 25px 10px 25px 10px;
+    padding: 15px 10px 15px 10px;
     width: 179px;
     height: 35px;
     border-bottom: 1px solid #c4c4c4;
@@ -160,24 +163,23 @@ body {
     height: 170px;
     width: 199px;
     border-top: 1px solid #c4c4c4;
-
+    display: none;
 }
 
-.left-panel .users-list .user:first-child {
-    border-top: 1px solid #fff;
-}
+/*.left-panel .users-list .user:first-child {*/
+/*border-top: 1px solid #fff;*/
+/*}*/
 
 .left-panel .users-list .user {
     width: 180px;
     height: 50px;
-    border-top: 1px solid #fff;
-    border-bottom: 1px solid #fff;
+    /*border-top: 1px solid #fff;*/
+    /*border-bottom: 1px solid #fff;*/
     cursor: pointer;
     color: #808080;
 }
 
 .left-panel .users-list .user:hover {
-    font-weight: bold;
     color: #000000;
 }
 
@@ -204,53 +206,56 @@ body {
     height: 32px;
 }
 
-.main-panel .u-info .u-face {
+.right-panel .u-info .u-face {
     margin: 15px;
     float: left;
     width: 60px;
     height: 60px;
 }
 
-.main-panel .u-info .button {
+.right-panel .u-info .button {
     float: right;
     margin-top: 30px;
     margin-bottom: 25px;
 }
 
-.main-panel .u-info .u-description {
+.right-panel .u-info .u-description {
     float: left;
     margin-top: 20px;
 }
 
-.main-panel .chat {
-    position: absolute;
+.right-panel .chat {
     right: 0;
     left: 0;
     bottom: 71px;
-    top: 86px;
-    overflow-y: auto;
+    overflow-y: scroll;
+    height: 455px;
 }
 
-.main-panel .chat .message {
+.right-panel .chat .message {
     float: left;
     width: 540px;
-    border-top: 1px solid #c4c4c4;
-    padding: 20px;
+    padding: 10px;
 }
 
-.main-panel .chat .message .face {
+.right-panel .chat .message .face {
     float: left;
 }
 
-.main-panel .chat .message .content {
+.right-panel .chat .message .content {
     margin-left: 70px;
     font-size: 12px;
 }
 
-.main-panel .po {
-    padding: 15px;
-    width: 570px;
-    height: 40px;
+.right-panel .chat .message .simple-content {
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.right-panel .po {
+    /*padding: 15px;*/
+    width: 600px;
+    height: 90px;
     border-top: 1px solid #c4c4c4;
     position: absolute;
     bottom: 0;
@@ -260,19 +265,14 @@ body {
     border-bottom-right-radius: 7px;
 }
 
-.main-panel .po input {
+.right-panel .po textarea {
     position: absolute;
-    left: 15px;
-    right: 15px;
-    top: 15px;
-    bottom: 15px;
-    padding: 0 80px 0 20px;
-}
-
-.main-panel .po button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    bottom: 20px;
-    width: 60px;
+    border: 0px;
+    top: 10px;
+    width: 100%;
+    height: 78px;
+    bottom: 0;
+    resize: none;
+    padding: 0px 8px;
+    font-size: 14px;
 }

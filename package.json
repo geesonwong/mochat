@@ -10,7 +10,7 @@
         "ejs": "*",
         "mongoskin": "*",
         "socket.io": "1.*",
+        "node-uuid": "*"
 
-        "mocha": "*"
     }
 }
