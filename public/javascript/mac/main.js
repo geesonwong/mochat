@@ -19,6 +19,13 @@ require.config({
 
 require(['jquery', 'socketio', 'director', 'template'], function ($, socketio, director, template) {
 
+    var self = {
+        id: '',
+        nickname: '',
+        face: '',
+        desc: ''
+    };
+
     // ------------- 准备工作 -------------
     template.openTag = '{{';
     template.closeTag = '}}';
@@ -33,17 +40,25 @@ require(['jquery', 'socketio', 'director', 'template'], function ($, socketio, d
         var director = require('director');
         // 进入房间
         socket.on('joined', function (data) {
+            self.id = data.id;
             console.log('房间号' + data.roomId);
             rooms[data.roomId] = {};
             roomIds.push(data.roomId);
-            director.joined({roomId: data.roomId, members: data.members});
+            var member;
+            for (var i in data.members) {
+                if (data.members[i].id != self.id) {
+                    member = data.members[i];
+                    break;
+                }
+            }
+            director.joined(data.roomId, member);
         });
         // 退出房间
         socket.on('left', function (data) {
             console.log('房间号' + data.roomId);
             var index = roomIds.indexOf(data.roomId);
             roomIds.splice(index);
-            director.left({roomId: data.roomId});
+            director.left(data.roomId);
         });
         // 接收消息
         socket.on('receive', function (data) {
@@ -51,12 +66,7 @@ require(['jquery', 'socketio', 'director', 'template'], function ($, socketio, d
             console.log('内容是' + data.content);
             console.log('时间是' + data.time);
             console.log('发送者' + data.sender);
-            director.receive({
-                roomId: data.roomId,
-                content: data.content,
-                time: data.time,
-                sender: data.sender
-            });
+            director.receive(data.roomId, data.sender, data.content);
         });
         // 接收通知
         socket.on('notice', function (data) {
@@ -71,7 +81,7 @@ require(['jquery', 'socketio', 'director', 'template'], function ($, socketio, d
             console.log('nickname是' + data.nickname);
             console.log('face是' + data.face);
             console.log(('desc是' + data.desc));
-
+            director.profiled(data.id, data.nickname, data.face, data.desc);
         });
     })();
 
@@ -85,7 +95,7 @@ require(['jquery', 'socketio', 'director', 'template'], function ($, socketio, d
             socket.emit('leave', {
                 roomId: roomId
             });
-            director.leave();
+            director.leave(roomId);
         },
         send: function send(roomId, content) {
             if (!roomId || !content)
@@ -96,7 +106,7 @@ require(['jquery', 'socketio', 'director', 'template'], function ($, socketio, d
                 roomId: roomId,
                 content: content
             });
-            director.send({roomId: roomId, content: content});
+            director.send(roomId, content);
         },
         profile: function profile(nickname, face, desc) {
             socket.emit('profile', {
@@ -138,12 +148,7 @@ require(['jquery', 'socketio', 'director', 'template'], function ($, socketio, d
         $('.right-panel').append(tpl);
         tpl.show();
         // 加载抹茶姑娘的对话
-        director.receive({
-            roomId: roomId,
-            sender: {nickname: '抹茶姑娘'},
-            content: '很高兴能见到你来抹茶跟大家聊天！',
-            time: new Date().toLocaleTimeString()
-        })
+        director.receive(roomId, {nickname: '抹茶姑娘'}, '很高兴能见到你来抹茶跟大家聊天！');
     })();
 
     // 1. join 按钮
@@ -220,16 +225,15 @@ require(['jquery', 'socketio', 'director', 'template'], function ($, socketio, d
                         tmp += '个人介绍将改为';
                         break;
                 }
-                director.receive({
-                    roomId: 'admin',
-                    sender: {nickname: '抹茶姑娘'},
-                    content: tmp + profile[i],
-                    time: new Date().toLocaleTimeString()
-                })
+                director.receive('admin', {nickname: '抹茶姑娘'}, tmp + profile[i]);
             }
             event.preventDefault();
         }
         return;
     });
-
+    // 6. leave 按钮
+    $('.right-panel').delegate('.leave', 'click', function (event) {
+        var roomId = $(event.currentTarget).attr('room-id');
+        client.leave(roomId);
+    });
 });
