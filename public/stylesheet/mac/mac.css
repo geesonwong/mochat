@@ -31,6 +31,16 @@ body {
     color: #3b8efd;
 }
 
+.loading {
+    background-image: url("/image/loading.gif");
+}
+
+.unread {
+    background-color: rgba(253, 63, 37, 0.62);
+    font-size: 10px;
+    color: white;
+}
+
 .button {
     background-image: url("/image/icons.png");
     width: 32px;
@@ -110,6 +120,7 @@ body {
     max-width: 450px;
     min-width: 80px;
     text-align: right;
+    vertical-align: middle;
     border: 1px solid gray;
     cursor: pointer;
     margin: 5px 10px 5px 10px;
@@ -135,24 +146,19 @@ body {
 }
 
 .right-panel .u-info {
-    width: 580px;
+    width: 600px;
     height: 85px;
-    padding-right: 20px;
     border-bottom: 1px solid #c4c4c4;
-    box-shadow: 0 0 5px gray;
-    -moz-box-shadow: 0 0 5px gray;
-    -webkit-box-shadow: 0 0 5px gray;
-    display: none;
 }
 
 .left-panel .setting {
-    padding: 15px 10px 15px 10px;
+    padding: 25px 10px 25px 10px;
     width: 179px;
     height: 35px;
     border-bottom: 1px solid #c4c4c4;
 }
 
-.left-panel .users-list {
+.left-panel .user-list {
     height: 290px;
     width: 205px;
     overflow-y: auto;
@@ -166,11 +172,7 @@ body {
     display: none;
 }
 
-/*.left-panel .users-list .user:first-child {*/
-/*border-top: 1px solid #fff;*/
-/*}*/
-
-.left-panel .users-list .user {
+.left-panel .user-list .tab {
     width: 180px;
     height: 50px;
     /*border-top: 1px solid #fff;*/
@@ -179,11 +181,15 @@ body {
     color: #808080;
 }
 
-.left-panel .users-list .user:hover {
+.left-panel .user-list .active:first-child {
+    border-top: 0px;
+}
+
+.left-panel .user-list .tab:hover {
     color: #000000;
 }
 
-.left-panel .users-list .active {
+.left-panel .user-list .active {
     width: 200px;
     border-bottom: 1px solid #c4c4c4;
     border-top: 1px solid #c4c4c4;
@@ -192,18 +198,27 @@ body {
     background-color: #fff;
 }
 
-.left-panel .users-list .user .name {
+.left-panel .user-list .tab .nickname {
     float: left;
     margin-top: 16px;
     margin-left: 5px;
     font-size: 14px;
 }
 
-.left-panel .users-list .user .face {
+.left-panel .user-list .tab .face {
     float: left;
     margin: 8px;
     width: 32px;
     height: 32px;
+}
+
+.left-panel .user-list .tab .addition {
+    float: right;
+    width: 16px;
+    height: 16px;
+    margin: 12px;
+    text-align: center;
+    padding: 4px;
 }
 
 .right-panel .u-info .u-face {
@@ -225,16 +240,14 @@ body {
 }
 
 .right-panel .chat {
-    right: 0;
-    left: 0;
-    bottom: 71px;
+    width: 600px;
     overflow-y: scroll;
-    height: 455px;
+    height: 365px;
 }
 
 .right-panel .chat .message {
     float: left;
-    width: 540px;
+    width: 580px;
     padding: 10px;
 }
 

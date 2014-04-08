@@ -6,15 +6,48 @@ define(['jquery', 'template'], function (io, template) {
      * 发起聊天
      */
     function join() {
-        alert('发起了聊天');
+        console.log('发起了聊天');
+        var html = template.render('user-tab-tpl', {
+            nickname: '等待中…',
+            face: '/image/who.png',
+            additions: 'loading',
+            userClass: 'tmp'
+        });
+        $('.user-list').append($(html));
     }
 
     /**
      * 成功建立聊天
      */
     function joined(data) {
+        $('.tab.tmp').remove();
+        $('.tab.active').removeClass('active');
+        $('.panel').hide();
+
+        // 增加 tab
         var roomId = data.roomId;
-        alert('成功建立聊天');
+        var html = template.render('user-tab-tpl', {
+            roomId: data.roomId,
+            nickname: data.members[0].nickname,
+            face: data.members[0].face,
+            desc: data.members[0].desc,
+            userClass: 'active'
+        });
+        var tpl = $(html);
+        tpl.attr('id', 'tab-' + roomId);
+        $('.user-list').append(tpl);
+
+        // 增加 panel
+        html = template.render('panel-tpl', {
+            nickname: data.members[0].nickname,
+            face: data.members[0].face,
+            desc: data.members[0].desc,
+            roomId: roomId
+        });
+        tpl = $(html);
+        tpl.attr('id', 'panel-' + roomId);
+        $('.right-panel').append(tpl);
+        tpl.show();
     }
 
     /**
@@ -43,12 +76,34 @@ define(['jquery', 'template'], function (io, template) {
      * 发送消息
      */
     function send(data) {
+        var html = template.render('simple-msg-tpl', {
+            color: 'blue',
+            nickname: '你',
+            time: new Date().toLocaleTimeString(),
+            content: data.content
+        });
+        __appendMsg__(data.roomId, html, true);
     }
 
     /**
      * 接收到消息
      */
     function receive(data) {
+        var roomId = data.roomId;
+        var html = template.render('simple-msg-tpl', {
+            color: 'brown',
+            nickname: data.sender.nickname,
+            time: new Date().toLocaleTimeString(),
+            content: data.content
+        });
+        __appendMsg__(roomId, html, false);
+        if (!$('#tab-' + roomId).hasClass('active')) {
+            var $additon = $('#tab-' + roomId).find('.addition');
+            $additon.addClass('unread');
+            var original = $additon.html() || 0;
+            $additon.html(parseInt(original) + 1);
+        }
+
     }
 
     /**
@@ -61,25 +116,18 @@ define(['jquery', 'template'], function (io, template) {
      * 修改自己的资料
      */
     function profile(data) {
+
+    }
+
+    function __appendMsg__(roomId, html, clear) {
+        var $chat = $('#chat-' + roomId);
+        $chat.append($(html));
+        if (clear)
+            $('#panel-' + roomId).find('.po textarea').val('');
+        $chat.scrollTop($chat[0].scrollHeight - 365);
     }
 
     return {
-        ok: function () {
-            var html = template.render('simple-msg-tpl', {
-                color: 'brown',
-                nickname: '匿名用户',
-                time: '13:09:23',
-                content: '人生何处不相逢，相逢何必曾相识。'
-            });
-            $('#chat-board').append(html);
-            $('#chat-board').append(html);
-            $('#chat-board').append(html);
-            $('#chat-board').append(html);
-            $('#chat-board').append(html);
-            $('#chat-board').append(html);
-            $('#chat-board').append(html);
-            $('#chat-board').append(html);
-        },
         join: join,
         joined: joined,
         leave: leave,

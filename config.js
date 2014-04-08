@@ -22,7 +22,8 @@ exports = module.exports = {
 
     front: {
         faviconUrl: 'http://cl.man.lv/favicon.ico',//'http://www.morewords.com/favicon.ico',
-        randomFace: 'http://avatar.3sd.me/40'
+        randomFace: 'http://avatar.3sd.me/40',
+        defaultDesc: '这个人很丑什么都不想说…'
     },
 
     userConf: {

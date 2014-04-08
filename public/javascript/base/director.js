@@ -67,7 +67,7 @@ define(['jquery', 'template'], function (io, template) {
         ok: function () {
             var html = template.render('simple-msg-tpl', {
                 color: 'brown',
-                nickname: '匿名用户',
+                nickname: '陌生人',
                 time: '13:09:23',
                 content: '人生何处不相逢，相逢何必曾相识。'
             });
