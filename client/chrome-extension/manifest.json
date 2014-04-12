@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+
+    "name": "抹茶",
+    "description": "抹茶快速聊天扩展",
+    "version": "1.0",
+
+    "content_scripts": [
+        {
+            "matches": ["http://*/*"],
+            "css": ["style.css"],
+            "js": ["lib/socket.io.js", "lib/jquery-2.1.0.min.js", "js/chat-client.js"]
+        }
+    ],
+    "browser_action": {
+//        "default_popup": "popup.html",
+        "default_icon": "icon.png"
+    },
+    "permissions": [
+        "http://*/*", "https://*/*", "contextMenus", "tabs", "webRequest", "webRequestBlocking", "webNavigation", "proxy", "notifications", "alarms" ]
+}

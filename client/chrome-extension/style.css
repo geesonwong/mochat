@@ -1,0 +1,62 @@
+#mochat-toggle {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    height: 25px;
+    width: 50px;
+    z-index: 1000;
+}
+
+#mochat-re {
+    position: fixed;
+    bottom: 40px;
+    right: 10px;
+    height: 25px;
+    width: 50px;
+    z-index: 1000;
+}
+
+#mochat-board {
+    position: fixed;
+    bottom: 40px;
+    right: 70px;
+    height: 100px;
+    width: 250px;
+    background-color: white;
+    overflow: auto;
+    z-index: 1000;
+    border: #808080 1px solid;
+}
+
+#mochat-po {
+    position: fixed;
+    bottom: 10px;
+    right: 70px;
+    height: 20px;
+    width: 250px;
+    z-index: 1000;
+    border: #808080 1px solid;
+}
+
+.brown {
+    color: #cb7d4a;
+    font-weight: bold;
+}
+
+.blue {
+    color: #2e1ea3;
+    font-weight: bold;
+}
+
+.black {
+    color: black;
+    font-weight: bold;
+}
+
+.msg {
+    font-family: '微软雅黑';
+    float: left;
+    width: 100%;
+    font-size: 12px;
+    text-align: left;
+}
