@@ -39,7 +39,7 @@ require(['jquery', 'socketio', 'director', 'template'], function ($, socketio, d
     (function () {
         var director = require('director');
         // 进入房间
-        socket.on('joined', function (data) {
+        socket.on('join', function (data) {
             self.id = data.id;
             console.log('房间号' + data.roomId);
             rooms[data.roomId] = {};
@@ -54,14 +54,14 @@ require(['jquery', 'socketio', 'director', 'template'], function ($, socketio, d
             director.joined(data.roomId, member);
         });
         // 退出房间
-        socket.on('left', function (data) {
+        socket.on('leave', function (data) {
             console.log('房间号' + data.roomId);
             var index = roomIds.indexOf(data.roomId);
             roomIds.splice(index);
             director.left(data.roomId);
         });
         // 接收消息
-        socket.on('receive', function (data) {
+        socket.on('msg', function (data) {
             console.log('房间号' + data.roomId);
             console.log('内容是' + data.content);
             console.log('时间是' + data.time);
@@ -102,7 +102,7 @@ require(['jquery', 'socketio', 'director', 'template'], function ($, socketio, d
                 director.alert({content: '刷新页面重试'});
             if (content.trim() == '')
                 return;
-            socket.emit('send', {
+            socket.emit('msg', {
                 roomId: roomId,
                 content: content
             });

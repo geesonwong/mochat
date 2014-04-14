@@ -21,7 +21,7 @@ function init(isJoin) {
         socket.on('join', function (data) {
             roomId = data.roomId;
             socketId = data.id;
-            appendToBoard('通知：已经连接成功，可以开始聊天，喵！', 'black');
+            appendToBoard('已经连接成功，可以开始聊天，喵！', 'black');
         });
 
         socket.on('msg', function (data) {
@@ -85,7 +85,7 @@ $('#mochat-re').click(function () {
             roomId: roomId
         });
     }
-    appendToBoard('通知：已经断开连接。自动找下个人…', 'black');
+    appendToBoard('已经断开连接。自动找下个人…', 'black');
     socket.emit('join');
 });
 
