@@ -1,7 +1,7 @@
-node_modules/*
+node_modules
 .idea
 public/user_data/*
 
-/.DS_Store
+.DS_Store
 
 **/.DS_Store
