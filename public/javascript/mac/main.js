@@ -40,6 +40,8 @@ require(['jquery', 'socketio', 'director', 'template'], function ($, socketio, d
         var director = require('director');
         // 进入房间
         socket.on('join', function (data) {
+            if (!data.isSuccess)
+                return;
             self.id = data.id;
             console.log('房间号' + data.roomId);
             rooms[data.roomId] = {};
@@ -76,7 +78,7 @@ require(['jquery', 'socketio', 'director', 'template'], function ($, socketio, d
             director.notice({roomId: data.roomId});
         });
         // 收到资料改变的信息
-        socket.on('profiled', function (data) {
+        socket.on('profile', function (data) {
             console.log('id是' + data.id);
             console.log('nickname是' + data.nickname);
             console.log('face是' + data.face);

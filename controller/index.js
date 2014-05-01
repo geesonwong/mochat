@@ -9,10 +9,10 @@ exports.defalutIndex = function (req, res, next) {
     });
 };
 
-exports.test1 = function (req, res, next) {
-    return res.render('test1');
+exports.webapp = function (req, res, next) {
+    return res.render('webapp');
 };
 
-exports.test2 = function (req, res, next) {
-    return res.render('test2');
+exports.test = function (req, res, next) {
+    return res.render('test1');
 };

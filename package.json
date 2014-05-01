@@ -12,5 +12,8 @@
         "socket.io": "1.*",
         "node-uuid": "*"
 
+    },
+    "scripts": {
+        "start": "node app.js"
     }
 }
