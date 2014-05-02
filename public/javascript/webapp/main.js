@@ -37,7 +37,7 @@ require(['jquery', 'socketio', 'template', 'iscroll', 'bootstrap'], function ($,
     };
 
     // ------------- socket 专场 -------------
-    var socket = socketio.connect(window.location.host);
+    var socket = socketio(window.location.host);
     var roomId , member;
 
     // 1. 给 socket 安装各类监听器

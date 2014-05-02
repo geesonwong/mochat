@@ -16,3 +16,7 @@ exports.webapp = function (req, res, next) {
 exports.test = function (req, res, next) {
     return res.render('test1');
 };
+
+exports.test = function (req, res, next) {
+    return res.render('test1');
+};
