@@ -1,0 +1,16 @@
+<%=chattingCount%>/<%=onlineCount%><br/>
+[
+<% for (var i in waiting) { %>
+<%=waiting[i].id%>
+<% } %>
+]
+<ul>
+    <% for (var i in roomMap) { %>
+    <li><span style="font-size: 16px;font-weight: bold"><%=i%></span> - [
+        <% for (var j in roomMap[i]) { %>
+        <%=roomMap[i][j].id%>
+        <% } %>
+        ]
+    </li>
+    <% } %>
+</ul>
