@@ -17,7 +17,7 @@ require.config({
     }
 });
 
-require(['jquery', 'socketio', 'template', 'iscroll', 'bootstrap'], function ($, socketio, template, iscroll, bootstrap) {
+require(['jquery', 'socketio', 'template', 'iscroll', 'bootstrap'], function ($, socketio, template) {
 
     // 组件常量
     var $board = $('#scroll .content-reply-box');
@@ -115,7 +115,7 @@ require(['jquery', 'socketio', 'template', 'iscroll', 'bootstrap'], function ($,
     // ------------- 监听器 专场 -------------
     // 3. 监听器
     // 发送内容
-    $('#po-btn').click(function () {
+    $poButton.click(function () {
         var content = $po.val();
         if (content.trim() == "")
             return;
@@ -129,16 +129,20 @@ require(['jquery', 'socketio', 'template', 'iscroll', 'bootstrap'], function ($,
             client.msg(content); // 发送消息
         }
     });
-    $('#reconnect').click(function () {
+    $reconnect.click(function () {
         $reconnect.prop('disabled', true);
         if ($reconnect.hasClass('connect')) { // 主动连接
             client.join();
             connectclk();
+            appendNotice('爷稍等，奴正在给你找一个人陪聊');
         } else { // 主动断开
             client.leave();
             disconnectclk();
         }
     });
+    window.onbeforeunload = function () {
+        return false;
+    };
 //    $po.focus(function () {
 //        $('.header').hide();
 //    });
@@ -188,6 +192,8 @@ require(['jquery', 'socketio', 'template', 'iscroll', 'bootstrap'], function ($,
             e.preventDefault();
         }, false);
 
+        appendNotice('嗨，欢迎来到爱抹茶，点击右上角的连接，你将随机找到一个陌生人跟你聊天哦，祝聊的开心！😚😚');
+        appendNotice('👀 对了对了，刷新或者关闭页面都会断开连接，并丢失所有的聊天信息，亲谨慎操作啊~');
     })();
 
 });

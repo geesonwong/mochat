@@ -164,6 +164,7 @@ li {
 .header {
     position: absolute;
     z-index: 2;
+    border-bottom: 1px #808080 solid;
 }
 
 .footer {
