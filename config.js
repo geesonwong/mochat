@@ -28,11 +28,6 @@ exports = module.exports = {
 
     userConf: {
         maxRoomCount: 5
-    },
-
-    roomConf: {
-
     }
 
-
-}
+};

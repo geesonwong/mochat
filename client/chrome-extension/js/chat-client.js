@@ -15,7 +15,7 @@ var socketId;
 var tmp_leave = false;
 
 function init(isJoin) {
-    socket = io('http://mochat.info:3000');
+    socket = io('http://mochat.info:18080');
 
     setTimeout(function () {
         socket.on('join', function (data) {
