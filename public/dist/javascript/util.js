@@ -1,0 +1,1 @@
+define(["require","exports","module","cookie"],function(e,t,n){e("cookie");var r=(new Date).getTime()+2592e6;dataStorage={set:function(e,t){typeof t=="object"&&(t=JSON.stringify(t)),$.cookie(e,t,{path:"/",expires:r})},get:function(e){var t=$.cookie(e);try{t=JSON.parse(t)}finally{return t}},remove:function(e){$.cookie(e,null)}},n.exports={dataStorage:dataStorage}});

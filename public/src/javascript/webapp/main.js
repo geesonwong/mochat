@@ -193,7 +193,7 @@ require(['jquery', 'socketio', 'template', 'iscroll', 'bootstrap'], function ($,
         }, false);
 
         appendNotice('嗨，欢迎来到爱抹茶，点击右上角的连接，你将随机找到一个陌生人跟你聊天哦，祝聊的开心！😚😚');
-        appendNotice('👀 对了对了，刷新或者关闭页面都会断开连接，并丢失所有的聊天信息，亲谨慎操作啊~');
+        appendNotice('👀 对了对了，刷新或者关闭页面都会断开连接，并丢失所有的聊天信息，爷请谨慎操作啊~');
     })();
 
 });
