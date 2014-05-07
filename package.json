@@ -8,7 +8,7 @@
     "dependencies": {
         "express": "3.*",
         "ejs": "*",
-        "mongoskin": "*",
+        "mongoose": "*",
         "socket.io": "1.*",
         "node-uuid": "*",
 

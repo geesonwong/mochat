@@ -1,0 +1,91 @@
+[
+    {
+        "name": "init",
+        "desc": "初始化",
+        "input": {
+            "userId": "String"
+        },
+        "output": {
+            "isSuccess": "Boolean",
+            "userId": "String",
+            "msg": "String"
+        }
+    },
+    {
+        "name": "join",
+        "desc": "进入房间",
+        "input": {
+            "roomId": "String"
+        },
+        "output": {
+            "isSuccess": "Boolean",
+            "msg": "String",
+            "room": {
+                "id": "String",
+                "name": "String"
+            },
+            "users": [
+                {
+                    "id": "String",
+                    "name": "String",
+                    "face": "String",
+                    "desc": "String"
+                }
+            ]
+        }
+    },
+    {
+        "name": "leave",
+        "desc": "离开房间",
+        "input": {
+            "roomId": "String"
+        },
+        "output": {
+            "isSuccess": "Boolean",
+            "msg": "String",
+            "room": {
+                "id": "String"
+            }
+        }
+    },
+    {
+        "name": "profile",
+        "desc": "修改个人资料",
+        "input": {
+            "name": "String",
+            "face": "String",
+            "desc": "String"
+        },
+        "output": {
+            "room": {
+                "id": "String"
+            },
+            "user": {
+                "id": "String",
+                "name": "String",
+                "face": "String",
+                "desc": "String"
+            }
+        }
+    },
+    {
+        "name": "msg",
+        "desc": "发送消息",
+        "input": {
+            "roomId": "String",
+            "content": "String"
+        },
+        "output": {
+            "room": {
+                "id": "String"
+            },
+            "message": {
+                "userId": "String",
+                "content": "String"
+            }
+        }
+    },
+    {
+
+    }
+]

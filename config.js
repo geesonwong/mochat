@@ -1,15 +1,10 @@
-/**
- * config file
- *
- */
-
 var path = require('path');
 
 exports = module.exports = {
 
     dbc: {
-        host: 'localhost',
-        db: 'chatnow',
+        host: '127.0.0.1',
+        db: 'mochat',
         port: '27017',
         username: '',
         password: '',
