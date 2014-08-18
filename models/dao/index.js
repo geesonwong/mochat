@@ -1,0 +1,1 @@
+exports.UserDao = require('./user');

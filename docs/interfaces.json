@@ -8,7 +8,7 @@
         "output": {
             "isSuccess": "Boolean",
             "userId": "String",
-            "msg": "String"
+            "message": "String"
         }
     },
     {
@@ -19,7 +19,7 @@
         },
         "output": {
             "isSuccess": "Boolean",
-            "msg": "String",
+            "message": "String",
             "room": {
                 "id": "String",
                 "name": "String"
@@ -42,10 +42,8 @@
         },
         "output": {
             "isSuccess": "Boolean",
-            "msg": "String",
-            "room": {
-                "id": "String"
-            }
+            "message": "String",
+            "roomId": "String"
         }
     },
     {
@@ -57,9 +55,7 @@
             "desc": "String"
         },
         "output": {
-            "room": {
-                "id": "String"
-            },
+            "roomId": "String",
             "user": {
                 "id": "String",
                 "name": "String",
@@ -69,23 +65,18 @@
         }
     },
     {
-        "name": "msg",
+        "name": "message",
         "desc": "发送消息",
         "input": {
             "roomId": "String",
             "content": "String"
         },
         "output": {
-            "room": {
-                "id": "String"
-            },
+            "roomId": "String",
             "message": {
                 "userId": "String",
                 "content": "String"
             }
         }
-    },
-    {
-
     }
 ]
