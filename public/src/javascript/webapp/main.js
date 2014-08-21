@@ -1,7 +1,7 @@
 require.config({
     shim: {
         'socketio': {
-            exports: 'io'
+            exports: 'socketio'
         },
         'iscroll': {
             exports: 'iscroll'
@@ -42,6 +42,7 @@ require(['jquery', 'socketio', 'template', 'iscroll', 'bootstrap'], function ($,
 
     // 1. 给 socket 安装各类监听器
     (function () {
+
         // 进入房间
         socket.on('join', function (data) {
             if (!data.isSuccess)

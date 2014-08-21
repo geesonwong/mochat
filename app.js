@@ -4,6 +4,8 @@ var express = require('express')
     , socket = require('./lib/socket')
     , config = require('./lib/config');
 
+var nSocket = require('./controllers/socket');
+
 // 配置
 var app = express();
 config(app);
@@ -15,4 +17,5 @@ var server = http.createServer(app).listen(app.get('port'), function () {
 // 路由
 route(app);
 // socket.io
-socket(server);
+nSocket.init(server);
+//socket(server);

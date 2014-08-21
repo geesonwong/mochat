@@ -3,20 +3,14 @@ var p2pSocketWaiting = require('../context/roomContext').p2pSocketWaiting;
 var os = require('os');
 
 /**
- * <p>绑定 leave 事件</p>
+ * <p>绑定 disconnect 事件</p>
  */
-exports.leave = module.exports = function (data) {
-
-    console.log(this.id + "离开房间" + data.roomId);
-    if (!data.roomId || !roomMap.hasOwnProperty(data.roomId))
-        return;
-
-    _leaveRoom_(data.roomId, this);
-
-    // 发送成功退房的消息
-    this.emit('leave', {
-        roomId: data.roomId
-    })
+exports = module.exports = function (data) {
+    console.log(this.id + "关闭了网页");
+    for (var i in this.rooms) {
+        if (this.rooms[i] != this.id)
+            _leaveRoom_(this.rooms[i], this);
+    }
 };
 
 function _leaveRoom_(roomId, socket) {

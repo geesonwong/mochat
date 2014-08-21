@@ -1,64 +1,25 @@
-//var models = require('../../models/dao');
-var Q = require('q');
-//var UserDao = models.UserDao;
 var SocketIo = require('socket.io');
 
-var join = require('./join');
-var leave = require('./leave');
+var socketController = require('./index');
 
 /**
  * <p>绑定 init 事件</p>
  */
-exports = module.exports = function (io) {
+exports = module.exports = function (server) {
+
+    var io = SocketIo(server);
 
     io.on('connection', function (socket) {
-        console.log('01');
-        socket.on('join', function (data) {
-            console.log('02');
-        });
+        // 网页打开，开始建立连接，并且绑定事件
+        console.log(socket.id + "打开网页创建连接");
+        socket.face = 'http://bcs.duapp.com/imocha-face/index/' + Math.ceil(Math.random() * 166) + '.gif';
+
+        socket.on('leave', socketController.leave);
+        socket.on('join', socketController.join);
+        socket.on('msg', socketController.message);
+        socket.on('profile', socketController.profile);
+        socket.on('disconnect', socketController.disconnect);
+
     });
-
-    var on$io = Q.nbind(io.on, io);
-    var onPromise = on$io('connection');
-
-    onPromise.then(function (socket) {
-        console.log('aaaa');
-    }, dualSocket);
-
-    function dualSocket(socket) {
-        var onEvent = Q.nbind(socket.on, socket);
-        join(onEvent);
-    }
-
-//    Q.nfcall(io.on, ['connection']).done(function () {
-//        console.log('-----------------------------------');
-//    });
-
-
-//    Q.npost(io, 'on', ['connection']).done(function () {
-//        console.log('!!')
-//    });
-
-
-//    var a = Q.denodeify(io.on);
-//    a('connection').done(function () {
-//        console.log('asdf')
-//    });
-//    Q.denodeify(io.a, 'connection').done(function (socket) {
-//        console.log('11');
-//        return Q.denodeify(socket, 'b', 'init');
-//    }).then(function (data) {
-//        console.log('12');
-//    });
-
-//        var userId = data.userId;
-//        var ip = socket.handshake.address;
-//        if (!userId) { // 首次登录，创建账号
-//            var qAdd = Q.denodeify(UserDao.add);
-//            qAdd(ip).fail(function () {
-//
-//            });
-//        }
-
 
 };
